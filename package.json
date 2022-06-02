@@ -1,0 +1,11 @@
+{
+  "name": "backend-caldera-news",
+  "version": "1.0.0",
+  "description": "Backend API for Caldera news",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Polma Tambunan",
+  "license": "ISC"
+}
