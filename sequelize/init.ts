@@ -3,8 +3,8 @@ import CryptoJS from 'crypto-js';
 
 export const sequelize = new Sequelize(
   process.env.DB_NAME,
-  CryptoJS.AES.decrypt(process.env.DB_USER.toString(), 's3cREt_k3Y').toString(CryptoJS.enc.Utf8),
-  CryptoJS.AES.decrypt(process.env.DB_PASS.toString(), 's3cREt_k3Y').toString(CryptoJS.enc.Utf8),
+  CryptoJS.AES.decrypt(process.env.DB_USER.toString(), process.env.SECRET_KEY.toString()).toString(CryptoJS.enc.Utf8),
+  CryptoJS.AES.decrypt(process.env.DB_PASS.toString(), process.env.SECRET_KEY.toString()).toString(CryptoJS.enc.Utf8),
   {
     host: process.env.DB_HOST,
     port: parseInt(process.env.DB_PORT),
