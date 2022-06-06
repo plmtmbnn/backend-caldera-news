@@ -1,32 +1,24 @@
 import { NewsModel } from '../model/index';
-require('../model/associations/index');
+// require('../model/associations/index');
+
+import { queryPayload } from '../../helper/QueryPayload';
 
 class NewsQuery {
-  async find (where: any = {}, attributes: any = [], transaction?: any) {
-    const options: any = ({ where, transaction });
-
-    if (attributes.length !== 0) { options.attributes = attributes; }
-
+  async find(payload: queryPayload) {
+    const options: any = ({ ...payload });
     return await NewsModel.findAndCountAll(options);
   }
 
-  async findAndCountAll (where: any = {}, transaction?: any) {
-    const options: any = ({ where, transaction });
-
-    return await NewsModel.findAndCountAll(options);
+  async findAndCountAll(payload: queryPayload) {
+    return await NewsModel.findAndCountAll({ ...payload });
   }
 
-  async update (value: any, where: any = {}, attributes: any = [], transaction?: any) {
-    const options: any = ({ where, transaction });
-    if (attributes.length !== 0) { options.attributes = attributes; };
-    return await NewsModel.update(value, { where });
+  async update(value: any, payload: any) {
+    return await NewsModel.update(value, { ...payload });
   }
 
-  async insert (value: any, attributes: any = [], transaction?: any) {
-    const options: any = ({ ...value, transaction });
-
-    if (attributes.length !== 0) { options.attributes = attributes; }
-    return await NewsModel.create(options);
+  async insert(value: any, payload: queryPayload) {
+    return await NewsModel.create(value, { ...payload });
   }
 }
 

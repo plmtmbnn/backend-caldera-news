@@ -1,32 +1,25 @@
 import { UserModel } from '../model/index';
-require('../model/associations/index');
+import { sequelize } from '../init';
+// require('../model/associations/index');
+
+import { queryPayload } from '../../helper/QueryPayload';
 
 class UserQuery {
-  async find(where: any = {}, attributes: any = [], transaction?: any) {
-    const options: any = ({ where, transaction });
-
-    if (attributes.length !== 0) { options.attributes = attributes; }
-
+  async find(payload: queryPayload) {
+    const options: any = ({ ...payload });
     return await UserModel.findAndCountAll(options);
   }
 
-  async findAndCountAll(where: any = {}, transaction?: any) {
-    const options: any = ({ where, transaction });
-
-    return await UserModel.findAndCountAll(options);
+  async findAndCountAll(payload: queryPayload) {
+    return await UserModel.findAndCountAll({ ...payload });
   }
 
-  async update(value: any, where: any = {}, attributes: any = [], transaction?: any) {
-    const options: any = ({ where, transaction });
-    if (attributes.length !== 0) { options.attributes = attributes; };
-    return await UserModel.update(value, { where });
+  async update(value: any, payload: any) {
+    return await UserModel.update(value, { ...payload });
   }
 
-  async insert(value: any, attributes: any = [], transaction?: any) {
-    const options: any = ({ ...value, transaction });
-
-    if (attributes.length !== 0) { options.attributes = attributes; }
-    return await UserModel.create(options);
+  async insert(value: any, payload: queryPayload) {
+    return await UserModel.create(value, { ...payload });
   }
 }
 

@@ -1,5 +1,5 @@
 import { sequelize } from '../init';
-import { DataTypes } from 'sequelize';
+import { DataTypes, literal } from 'sequelize';
 
 export const UserModel = sequelize.define('t_user', {
   id: {
@@ -31,10 +31,15 @@ export const UserModel = sequelize.define('t_user', {
   register_via: {
     type: DataTypes.STRING,
     allowNull: true
+  },
+  created_at: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    defaultValue: literal('NOW()')
   }
 }, {
-  underscored: true,
+  underscored: false,
   tableName: 't_user',
-  createdAt: true,
+  createdAt: false,
   updatedAt: false
 });

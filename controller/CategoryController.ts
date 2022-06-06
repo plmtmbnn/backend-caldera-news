@@ -3,7 +3,7 @@ import { CategoryService } from '../service/CategoryService';
 import { ResponseHandler } from '../helper/ResponseHandler';
 
 export class CategoryController {
-  async getFundingMethod (req: Request, res: Response): Promise<void> {
+  async getCategory (req: Request, res: Response): Promise<void> {
     try {
       const result: any = await CategoryService.getCategoryList(req, res);
       ResponseHandler.send(res, result);

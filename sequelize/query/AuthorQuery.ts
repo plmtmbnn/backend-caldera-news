@@ -1,30 +1,24 @@
 import { AuthorModel } from '../model/index';
-require('../model/associations/index');
+// require('../model/associations/index');
+
+import { queryPayload } from '../../helper/QueryPayload';
 
 class AuthorQuery {
-  async find (where: any = {}, attributes: any = [], transaction?: any) {
-    const options: any = ({ where, transaction });
-
-    if (attributes.length !== 0) { options.attributes = attributes; }
-
+  async find(payload: queryPayload) {
+    const options: any = ({ ...payload });
     return await AuthorModel.findAndCountAll(options);
   }
 
-  async findAndCountAll (where: any = {}, transaction?: any) {
-    return await AuthorModel.findAndCountAll({ where, transaction });
+  async findAndCountAll(payload: queryPayload) {
+    return await AuthorModel.findAndCountAll({ ...payload });
   }
 
-  async update (value: any, where: any = {}, attributes: any = [], transaction?: any) {
-    const options: any = ({ where, transaction });
-    if (attributes.length !== 0) { options.attributes = attributes; };
-    return await AuthorModel.update(value, { where });
+  async update(value: any, payload: any) {
+    return await AuthorModel.update(value, { ...payload });
   }
 
-  async insert (value: any, attributes: any = [], transaction?: any) {
-    const options: any = ({ ...value, transaction });
-
-    if (attributes.length !== 0) { options.attributes = attributes; }
-    return await AuthorModel.create(options);
+  async insert(value: any, payload: queryPayload) {
+    return await AuthorModel.create(value, { ...payload });
   }
 }
 

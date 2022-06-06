@@ -1,12 +1,12 @@
 import { sequelize } from '../init';
-import { DataTypes } from 'sequelize';
+import { DataTypes, literal } from 'sequelize';
 
 export const NewsLikeModel = sequelize.define('t_news_like', {
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true,
-    autoIncrement: true
+    defaultValue: literal('uuid_generate_v1()')
   },
   user_id: {
     type: DataTypes.INTEGER,

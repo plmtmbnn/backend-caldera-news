@@ -1,4 +1,4 @@
-const router = require('./route/Router');
+import router from './route';
 var cors = require('cors');
 var express = require('express');
 

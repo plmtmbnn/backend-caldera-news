@@ -1,12 +1,11 @@
 import { Request, Response } from 'express';
+import express from 'express';
+const router = express.Router();
 
 // Controller
-
+import { categoryController } from '../controller/CategoryController';
 
 // middleware
-
-const express = require('express');
-const router = express.Router();
 
 // health check endpoint
 router.get(['/health', '/'], (req: Request, res: Response) => {
@@ -16,7 +15,8 @@ router.get(['/health', '/'], (req: Request, res: Response) => {
   });
 });
 
-// route
+//category
+router.get('/category/get/all', categoryController.getCategory);
 
 // Return 404 to all unidentified path URLs
 router.get('*', function (req: Request, res: Response) {
@@ -26,4 +26,4 @@ router.post('*', function (req: Request, res: Response) {
   res.status(404).json();
 });
 
-module.exports = router;
+export default router;

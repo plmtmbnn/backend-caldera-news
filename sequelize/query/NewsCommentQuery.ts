@@ -1,30 +1,25 @@
 import { NewsCommentModel } from '../model/index';
-require('../model/associations/index');
+// require('../model/associations/index');
+
+import { queryPayload } from '../../helper/QueryPayload';
+
 
 class NewsCommentQuery {
-  async find (where: any = {}, attributes: any = [], transaction?: any) {
-    const options: any = ({ where, transaction });
-
-    if (attributes.length !== 0) { options.attributes = attributes; }
-
+  async find(payload: queryPayload) {
+    const options: any = ({ ...payload });
     return await NewsCommentModel.findAndCountAll(options);
   }
 
-  async findAndCountAll (where: any = {}, transaction?: any) {
-    return await NewsCommentModel.findAndCountAll({ where });
+  async findAndCountAll(payload: queryPayload) {
+    return await NewsCommentModel.findAndCountAll({ ...payload });
   }
 
-  async update (value: any, where: any = {}, attributes: any = [], transaction?: any) {
-    const options: any = ({ where, transaction });
-    if (attributes.length !== 0) { options.attributes = attributes; };
-    return await NewsCommentModel.update(value, { where });
+  async update(value: any, payload: any) {
+    return await NewsCommentModel.update(value, { ...payload });
   }
 
-  async insert (value: any, attributes: any = [], transaction?: any) {
-    const options: any = ({ ...value, transaction });
-
-    if (attributes.length !== 0) { options.attributes = attributes; }
-    return await NewsCommentModel.create(options);
+  async insert(value: any, payload: queryPayload) {
+    return await NewsCommentModel.create(value, { ...payload });
   }
 }
 
