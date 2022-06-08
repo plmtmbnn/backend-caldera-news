@@ -8,6 +8,7 @@ export class AuthController {
       const result: any = await AuthService.login(req, res);
       ResponseHandler.send(res, result);
     } catch (error) {
+      console.log('[AuthController][login]', error);      
       ResponseHandler.send(res, error, true);
     }
   }

@@ -8,6 +8,14 @@ export const UserModel = sequelize.define('t_user', {
     primaryKey: true,
     autoIncrement: true
   },
+  full_name: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  facebook_id: {
+    type: DataTypes.STRING,
+    allowNull: true
+  }, 
   username: {
     type: DataTypes.STRING,
     allowNull: true
@@ -24,7 +32,7 @@ export const UserModel = sequelize.define('t_user', {
     type: DataTypes.STRING,
     allowNull: true
   },
-  google_response: {
+  login_response: {
     type: DataTypes.JSON,
     allowNull: true
   },

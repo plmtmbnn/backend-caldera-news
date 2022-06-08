@@ -11,15 +11,18 @@ class UserQuery {
   }
 
   async findAndCountAll(payload: queryPayload) {
-    return await UserModel.findAndCountAll({ ...payload });
+    const options: any = ({ ...payload });    
+    return await UserModel.findAndCountAll(options);
   }
 
   async update(value: any, payload: any) {
-    return await UserModel.update(value, { ...payload });
+    const options: any = ({ ...payload });
+    return await UserModel.update(value, options);
   }
 
   async insert(value: any, payload: queryPayload) {
-    return await UserModel.create(value, { ...payload });
+    const options: any = ({ ...payload });
+    return await UserModel.create(value, options);
   }
 }
 

@@ -1,4 +1,7 @@
+//route
 import router from './route';
+import authRoute from './route/route-auth';
+
 import cors from 'cors';
 import express from 'express';
 
@@ -47,6 +50,7 @@ class App {
       }
       ));
 
+      this.app.use('/auth', authRoute);
       this.app.use('/', router);
     } catch (error) {
       console.log('error', error);
