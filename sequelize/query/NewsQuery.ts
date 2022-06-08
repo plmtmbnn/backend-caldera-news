@@ -13,6 +13,10 @@ class NewsQuery {
     return await NewsModel.findAndCountAll({ ...payload });
   }
 
+  async getNewsDetail(payload: queryPayload) {
+    return await NewsModel.findAndCountAll({ ...payload });
+  }
+
   async update(value: any, payload: any) {
     return await NewsModel.update(value, { ...payload });
   }

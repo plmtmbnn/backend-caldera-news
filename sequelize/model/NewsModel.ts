@@ -29,7 +29,7 @@ export const NewsModel = sequelize.define('t_news', {
     allowNull: true
   },
   status: {
-    type: DataTypes.BOOLEAN,
+    type: DataTypes.STRING,
     allowNull: true
   },
   category_id: {

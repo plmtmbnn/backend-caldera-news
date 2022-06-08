@@ -38,7 +38,7 @@ export class AuthService {
             login_response: user,
             status: true
           }, { transaction });
-          (await transaction).commit();
+          await transaction.commit();
         }
 
         if (result.count > 0) {
@@ -63,7 +63,7 @@ export class AuthService {
         throw new CustomException(EXCEPTION_MESSAGE.DATA_NOT_FOUND);
       }
     } catch (error) {
-      (await transaction).rollback();
+      await transaction.rollback();
       console.log('[AuthService][login]', error);
       throw new CustomException(EXCEPTION_MESSAGE.SYSTEM_ERROR);
     }
