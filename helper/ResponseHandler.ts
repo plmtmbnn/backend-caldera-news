@@ -6,7 +6,7 @@ export class ResponseHandler {
     if (isFailed) {
 
       if (responseHandler.obj) {
-        res.status(responseHandler.obj.code).json({ status: 'FAILED', message: responseHandler.obj.message });
+        res.status(responseHandler.obj.code).json({ status: 'FAILED', message: responseHandler.obj.message, error:  responseHandler.obj.error});
       } else {
         res.status(500).json({ status: 'FAILED', message: EXCEPTION_MESSAGE.SYSTEM_ERROR.message });
       }
