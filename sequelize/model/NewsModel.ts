@@ -41,7 +41,7 @@ export const NewsModel = sequelize.define('t_news', {
     allowNull: true
   },
 }, {
-  underscored: false,
+  underscored: true,
   tableName: 't_news',
   createdAt: true,
   updatedAt: true

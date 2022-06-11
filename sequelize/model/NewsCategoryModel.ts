@@ -21,8 +21,8 @@ export const NewsCategoryModel = sequelize.define('t_news_category', {
     allowNull: true
   }
 }, {
-  underscored: false,
+  underscored: true,
   tableName: 't_news_category',
   createdAt: true,
-  updatedAt: false
+  updatedAt: true
 });

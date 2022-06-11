@@ -17,8 +17,8 @@ export const NewsLikeModel = sequelize.define('t_news_like', {
     allowNull: true
   },
 }, {
-  underscored: false,
+  underscored: true,
   tableName: 't_news_like',
-  createdAt: false,
+  createdAt: true,
   updatedAt: false
 });

@@ -46,8 +46,8 @@ export const UserModel = sequelize.define('t_user', {
     defaultValue: literal('NOW()')
   }
 }, {
-  underscored: false,
+  underscored: true,
   tableName: 't_user',
-  createdAt: false,
-  updatedAt: false
+  createdAt: true,
+  updatedAt: true
 });

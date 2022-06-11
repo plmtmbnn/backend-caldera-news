@@ -17,8 +17,8 @@ export const AuthorModel = sequelize.define('t_author', {
     allowNull: true
   },
 }, {
-  underscored: false,
+  underscored: true,
   tableName: 't_author',
-  createdAt: false,
-  updatedAt: false
+  createdAt: true,
+  updatedAt: true
 });

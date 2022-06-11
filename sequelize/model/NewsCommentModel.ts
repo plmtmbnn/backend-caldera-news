@@ -21,8 +21,8 @@ export const NewsCommentModel = sequelize.define('t_news_comment', {
     allowNull: true
   },
 }, {
-  underscored: false,
+  underscored: true,
   tableName: 't_news_comment',
   createdAt: true,
-  updatedAt: false
+  updatedAt: true
 });

@@ -1,11 +1,17 @@
-import { NewsModel } from '../model/index';
-// require('../model/associations/index');
+import {
+  AuthorModel,
+  NewsCategoryModel,
+  NewsCommentModel,
+  NewsLikeModel,
+  NewsModel,
+} from "../model/index";
+require("../model/associations/index");
 
-import { queryPayload } from '../../helper/QueryPayload';
+import { queryPayload } from "../../helper/QueryPayload";
 
 class NewsQuery {
   async find(payload: queryPayload) {
-    const options: any = ({ ...payload });
+    const options: any = { ...payload };
     return await NewsModel.findAndCountAll(options);
   }
 
@@ -14,7 +20,28 @@ class NewsQuery {
   }
 
   async getNewsDetail(payload: queryPayload) {
-    return await NewsModel.findAndCountAll({ ...payload });
+    const options: any = {
+      ...payload,
+      include: [
+        {
+          model: AuthorModel,
+          required: true,
+        },
+        {
+          model: NewsLikeModel,
+          required: false,
+        },
+        {
+          model: NewsCategoryModel,
+          required: false,
+        },
+        {
+          model: NewsCommentModel,
+          required: false,
+        },
+      ],
+    };
+    return await NewsModel.findAndCountAll(options);
   }
 
   async update(value: any, payload: any) {

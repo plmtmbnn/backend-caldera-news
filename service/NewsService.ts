@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { EXCEPTION_MESSAGE } from "../helper/EXCEPTION_MESSAGE";
 import { CustomException } from "../helper/CustomException";
 
-import { newsQuery } from "../sequelize/query";
+import { newsQuery, newsCommentQuery, newsLikeQuery } from "../sequelize/query";
 import { sequelize } from "../sequelize/init";
 import { Op, col, fn, where, literal } from "sequelize";
 
@@ -81,15 +81,52 @@ export class NewsService {
   static async getNews(req: Request, res: Response): Promise<any> {
     let queryPayload: queryPayload = {
       where: {
-        news_url: req.params.news_url
+        news_url: req.params.news_url,
       },
+      order: [["id", "ASC"]],
+    };
+    const result: any = await newsQuery.findAndCountAll(queryPayload);
+
+    if (result.count === 0)
+      throw new CustomException(EXCEPTION_MESSAGE.DATA_NOT_FOUND);
+
+    const likes: any = await newsLikeQuery.findAndCountAll({
+      where: { news_id: result.rows[0].id },
+    });
+
+    const comments: any = await newsCommentQuery.findAndCountAll({
+      where: { news_id: result.rows[0].id },
+      order: [["created_at", "DESC"]],
+    });
+
+    return {
+      data: {
+        news: result.rows[0],
+        likes: likes.count,
+        comments: comments.count > 0 ? comments.row : [],
+      },
+    };
+  }
+
+  static async getNewsList(req: Request, res: Response): Promise<any> {
+    let queryPayload: queryPayload = {
+      where: {},
       order: [["id", "ASC"]],
     };
     const result: any = await newsQuery.getNewsDetail(queryPayload);
 
-    if (result.rowCount === 0)
+    if (result.count === 0)
       throw new CustomException(EXCEPTION_MESSAGE.DATA_NOT_FOUND);
 
-    return { data: result.rows[0] };
+    const likes: any = await newsLikeQuery.findAndCountAll({
+      where: { news_id: result.rows[0].id },
+    });
+
+    const comments: any = await newsCommentQuery.findAndCountAll({
+      where: { news_id: result.rows[0].id },
+      order: [["created_at", "DESC"]],
+    });
+
+    return { data: result.rows };
   }
 }

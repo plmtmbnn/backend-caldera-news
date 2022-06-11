@@ -65,6 +65,38 @@ export class NewsController {
       ResponseHandler.send(res, error, true);
     }
   }
+
+  
+  async getNewsList(req: Request, res: Response): Promise<void> {
+    try {
+      const schema: Joi.Schema = Joi.object({
+        news_id: Joi.string().uuid().allow(null).optional(),
+        title: Joi.string().allow("", null).optional(),
+        author_id: Joi.number().optional(),
+        status: Joi.boolean().allow(null).optional(),
+        category_id: Joi.number().optional(),
+        limit: Joi.number().optional(),
+        offset: Joi.number().optional()
+      });
+
+      const validationResult: any = schema.validate(req.body);
+      if (
+        validationResult.error &&
+        validationResult.error.details.length > 0
+      ) {
+        ResponseHandler.send(res, new CustomException({
+          ...EXCEPTION_MESSAGE.MISSING_REQUIRED_DATA,
+          error: validationResult.error.details,
+        }), true);
+      } else {
+        const result: any = await NewsService.getNewsList(req, res);
+        ResponseHandler.send(res, result);
+        }
+    } catch (error) {
+      console.log("[NewsController][getNewsList]", error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
 }
 
 export const newsController = new NewsController();
