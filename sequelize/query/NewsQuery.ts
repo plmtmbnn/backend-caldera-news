@@ -9,6 +9,8 @@ require("../model/associations/index");
 
 import { queryPayload } from "../../helper/QueryPayload";
 
+import { QueryTypes } from 'sequelize';
+
 class NewsQuery {
   async find(payload: queryPayload) {
     const options: any = { ...payload };
@@ -25,7 +27,7 @@ class NewsQuery {
       include: [
         {
           model: AuthorModel,
-          required: true,
+          required: false,
         },
         {
           model: NewsLikeModel,

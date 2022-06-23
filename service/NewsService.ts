@@ -114,18 +114,9 @@ export class NewsService {
       order: [["id", "ASC"]],
     };
     const result: any = await newsQuery.getNewsDetail(queryPayload);
-
+    
     if (result.count === 0)
       throw new CustomException(EXCEPTION_MESSAGE.DATA_NOT_FOUND);
-
-    const likes: any = await newsLikeQuery.findAndCountAll({
-      where: { news_id: result.rows[0].id },
-    });
-
-    const comments: any = await newsCommentQuery.findAndCountAll({
-      where: { news_id: result.rows[0].id },
-      order: [["created_at", "DESC"]],
-    });
 
     return { data: result.rows };
   }

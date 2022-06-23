@@ -2,6 +2,7 @@
 import router from './route';
 import authRoute from './route/route-auth';
 import newsRoute from './route/route-news';
+import categoryRoute from './route/route-category';
 
 import cors from 'cors';
 import express from 'express';
@@ -53,6 +54,8 @@ class App {
 
       this.app.use('/auth', authRoute);
       this.app.use('/news', newsRoute);
+      this.app.use('/category', categoryRoute);
+      
       this.app.use('/', router);      
     } catch (error) {
       console.log('error', error);
