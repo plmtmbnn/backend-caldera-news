@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=local dotenv-load nodemon",
-    "tsc": "tsc"
+    "build": "tsc"
   },
   "author": "Polma Tambunan",
   "license": "ISC",
