@@ -1,12 +1,13 @@
 application:
   name: backend-caldera-news
-  organization: QoveryCommunity
-  project: BuildpacksTest2
+  project: backend-caldera-news
   publicly_accessible: true
-  ram: 256MB
-  port: 2404
+databases:
+- type: postgresql
+  version: "12"
+  name: caldera_db
 routers:
-- name: main
+- name: my-router
   routes:
   - application_name: backend-caldera-news
     paths:
