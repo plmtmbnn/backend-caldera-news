@@ -1,0 +1,13 @@
+application:
+  name: backend-caldera-news
+  organization: QoveryCommunity
+  project: BuildpacksTest2
+  publicly_accessible: true
+  ram: 256MB
+  port: 2404
+routers:
+- name: main
+  routes:
+  - application_name: backend-caldera-news
+    paths:
+    - /
