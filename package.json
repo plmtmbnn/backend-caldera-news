@@ -4,8 +4,13 @@
   "description": "Backend API for Caldera news",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=local dotenv-load nodemon",
+    "start": "vercel dev",
+    "deploy": "vercel deploy --prod",
+    "start-dev": "cross-env NODE_ENV=local dotenv-load nodemon",
     "build": "tsc"
+  },
+  "engines": {
+    "node": "14.x"
   },
   "author": "Polma Tambunan",
   "license": "ISC",
@@ -40,6 +45,7 @@
     "pg": "^8.7.3",
     "sequelize": "^6.20.1",
     "sharp": "^0.30.6",
-    "ts-node": "^10.8.0"
+    "ts-node": "^10.8.0",
+    "vercel": "^25.1.0"
   }
 }

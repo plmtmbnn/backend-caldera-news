@@ -4,3 +4,4 @@
 /logs
 /image
 .DS_Store
+.vercel
