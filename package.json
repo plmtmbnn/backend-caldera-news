@@ -7,7 +7,8 @@
     "start-dev": "vercel dev",
     "deploy": "vercel deploy --prod",
     "start": "cross-env NODE_ENV=local dotenv-load nodemon",
-    "build": "tsc"
+    "build": "tsc",
+    "vercel build": "tsc"
   },
   "engines": {
     "node": "16.x"
