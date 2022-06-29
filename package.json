@@ -1,7 +1,7 @@
 {
   "name": "backend-caldera-news",
   "version": "1.0.0",
-  "description": "Backend API for Caldera news",
+  "description": "Backend API for Caldera News",
   "main": "index.js",
   "scripts": {
     "start-dev": "vercel dev",
