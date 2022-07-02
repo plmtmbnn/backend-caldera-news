@@ -7,7 +7,7 @@
     "start-dev": "vercel dev",
     "deploy": "vercel deploy --prod",
     "start-local": "cross-env NODE_ENV=local dotenv-load nodemon",
-    "start": "node build/server.js",
+    "start": "cross-env NODE_ENV=local dotenv-load node build/server.js",
     "build": "tsc && cp -R .env build/ && cp -R .env.local build/",
     "vercel build": "tsc"
   },
