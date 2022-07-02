@@ -7,6 +7,8 @@ import { categoryController } from '../controller/CategoryController';
 
 // health check endpoint
 router.get(['/health', '/'], (req: Request, res: Response) => {
+  console.log('THIS', process.env);
+  
   res.status(200).json({
     status: 'OK',
     message: 'Backend API is live.'
@@ -15,6 +17,8 @@ router.get(['/health', '/'], (req: Request, res: Response) => {
 
 //category
 router.get('/category/get/all', categoryController.getCategory);
+
+router.get('/sync/db', categoryController.syncDatabase);
 
 // Return 404 to all unidentified path URLs
 router.get('*', function (req: Request, res: Response) {

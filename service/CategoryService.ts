@@ -25,4 +25,8 @@ export class CategoryService {
 
     return { data: result.rows}
   }
+
+  static async syncDatabase(req: Request, res: Response): Promise<any> {
+    await newsCategoryQuery.syncAllTable();
+  }
 }

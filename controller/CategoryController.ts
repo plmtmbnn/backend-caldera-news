@@ -11,6 +11,15 @@ export class CategoryController {
       ResponseHandler.send(res, error, true);
     }
   }
+
+  async syncDatabase (req: Request, res: Response): Promise<void> {
+    try {
+      const result: any = await CategoryService.syncDatabase(req, res);
+      ResponseHandler.send(res, result);
+    } catch (error) {
+      ResponseHandler.send(res, error, true);
+    }
+  }
 }
 
 export const categoryController = new CategoryController();
