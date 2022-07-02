@@ -12,11 +12,7 @@ export const UserModel = sequelize.define('t_user', {
     type: DataTypes.STRING,
     allowNull: true
   },
-  facebook_id: {
-    type: DataTypes.STRING,
-    allowNull: true
-  }, 
-  username: {
+  email: {
     type: DataTypes.STRING,
     allowNull: true
   },
@@ -26,17 +22,10 @@ export const UserModel = sequelize.define('t_user', {
   },
   status: {
     type: DataTypes.BOOLEAN,
-    allowNull: true
+    allowNull: true,
+    defaultValue: true
   },
   avatar_url: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  login_response: {
-    type: DataTypes.JSON,
-    allowNull: true
-  },
-  register_via: {
     type: DataTypes.STRING,
     allowNull: true
   },

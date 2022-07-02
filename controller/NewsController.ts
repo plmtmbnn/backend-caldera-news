@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
+
 import { NewsService } from "../service/NewsService";
+import { LikeService } from "../service/LikeService";
+import { CommentService } from "../service/CommentService";
+
 import { ResponseHandler } from "../helper/ResponseHandler";
 import { EXCEPTION_MESSAGE } from "../helper/EXCEPTION_MESSAGE";
 import { CustomException } from "../helper/CustomException";
@@ -66,7 +70,6 @@ export class NewsController {
     }
   }
 
-  
   async getNewsList(req: Request, res: Response): Promise<void> {
     try {
       const schema: Joi.Schema = Joi.object({
@@ -94,6 +97,79 @@ export class NewsController {
         }
     } catch (error) {
       console.log("[NewsController][getNewsList]", error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
+
+  async upsertLike(req: Request, res: Response): Promise<void> {
+    try {
+      const schema: Joi.Schema = Joi.object({
+        news_id: Joi.string().required(),
+        user_id: Joi.number().required()
+      });
+
+      const validationResult: any = schema.validate(req.body);
+      if (
+        validationResult.error &&
+        validationResult.error.details.length > 0
+      ) {
+        ResponseHandler.send(res, new CustomException({
+          ...EXCEPTION_MESSAGE.MISSING_REQUIRED_DATA,
+          error: validationResult.error.details,
+        }), true);
+      } else {
+        const result: any = await LikeService.upsertLike(req, res);
+        ResponseHandler.send(res, result);
+        }
+    } catch (error) {
+      console.log("[NewsController][upsertLike]", error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
+
+  async getLikes(req: Request, res: Response): Promise<void> {
+    try {
+      const result: any = await LikeService.getLikes(req, res);
+      ResponseHandler.send(res, result);
+    } catch (error) {
+      console.log("[NewsController][getLikes]", error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
+
+  async upsertComment(req: Request, res: Response): Promise<void> {
+    try {
+      const schema: Joi.Schema = Joi.object({
+        news_id: Joi.string().required(),
+        user_id: Joi.number().required(),
+        comment: Joi.string().required()
+      });
+
+      const validationResult: any = schema.validate(req.body);
+      if (
+        validationResult.error &&
+        validationResult.error.details.length > 0
+      ) {
+        ResponseHandler.send(res, new CustomException({
+          ...EXCEPTION_MESSAGE.MISSING_REQUIRED_DATA,
+          error: validationResult.error.details,
+        }), true);
+      } else {
+        const result: any = await CommentService.upsertComment(req, res);
+        ResponseHandler.send(res, result);
+        }
+    } catch (error) {
+      console.log("[NewsController][upsertComment]", error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
+
+  async getComment(req: Request, res: Response): Promise<void> {
+    try {
+      const result: any = await CommentService.getComments(req, res);
+      ResponseHandler.send(res, result);
+    } catch (error) {
+      console.log("[NewsController][getComment]", error);
       ResponseHandler.send(res, error, true);
     }
   }

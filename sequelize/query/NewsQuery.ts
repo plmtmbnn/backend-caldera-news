@@ -18,7 +18,18 @@ class NewsQuery {
   }
 
   async findAndCountAll(payload: queryPayload) {
-    return await NewsModel.findAndCountAll({ ...payload });
+    return await NewsModel.findAndCountAll({ ...payload,
+      include: [
+        {
+          model: AuthorModel,
+          required: false,
+        },
+        {
+          model: NewsCategoryModel,
+          required: false,
+        }
+      ]
+       });
   }
 
   async getNewsDetail(payload: queryPayload) {

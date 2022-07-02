@@ -3,5 +3,7 @@ export const EXCEPTION_MESSAGE = {
   DATA_NOT_FOUND: { message: 'DATA_NOT_FOUND', code: 400 },
   SYSTEM_ERROR: { message: 'SYSTEM_ERROR', code: 500 },
   NOT_AUTHENTICATED: { message: 'NOT_AUTHENTICATED', code: 401 },
+  EMAIL_ALREADY_USED: { message: 'EMAIL_ALREADY_USED', code: 401 },
   USER_NOT_REGISTERED_YET: { message: 'USER_NOT_REGISTERED_YET', code: 400 },
+  INVALID_EMAIL_OR_PASSWORD: { message: 'INVALID_EMAIL_OR_PASSWORD', code: 400 },
 };

@@ -19,7 +19,7 @@ export class NewsService {
     if (req.body.file) {
       const uploadStatus: any = await FileHelper.saveAndResizeFile(
         req.body.file,
-        "./image/"
+        "./image/news/"
       );
       image_url = uploadStatus.status ? uploadStatus.filename : undefined;
     }
@@ -47,7 +47,7 @@ export class NewsService {
             content: req.body.content,
             status: req.body.status,
             category_id: req.body.category_id || undefined,
-            posted_at: req.body.posted_at || undefined,
+            posted_at: req.body.posted_at || undefined            
           },
           {
             where: { id: req.body.news_id },
@@ -64,6 +64,7 @@ export class NewsService {
             status: req.body.status,
             category_id: req.body.category_id || undefined,
             posted_at: req.body.posted_at || undefined,
+            author_id: req.body.author_id || undefined
           },
           {
             transaction,

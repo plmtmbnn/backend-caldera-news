@@ -4,7 +4,6 @@ import { Response } from 'express';
 export class ResponseHandler {
   static send(res: Response, responseHandler: any, isFailed: boolean = false) {
     if (isFailed) {
-
       if (responseHandler.obj) {
         res.status(responseHandler.obj.code).json({ status: 'FAILED', message: responseHandler.obj.message, error:  responseHandler.obj.error});
       } else {
