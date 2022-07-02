@@ -12,9 +12,6 @@
     "postinstall": "tsc",
     "vercel build": "tsc"
   },
-  "engines": {
-    "node": "16.x"
-  },
   "author": "Polma Tambunan",
   "license": "ISC",
   "devDependencies": {
