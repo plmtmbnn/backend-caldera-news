@@ -2,19 +2,20 @@
   "name": "backend-caldera-news",
   "version": "1.0.0",
   "description": "Backend API for Caldera news",
-  "main": "index.js",
+  "main": "server.ts",
   "scripts": {
     "start-dev": "vercel dev",
     "deploy": "vercel deploy --prod",
     "start-local": "cross-env NODE_ENV=local dotenv-load nodemon",
     "start": "cross-env NODE_ENV=local dotenv-load node build/server.js",
-    "build": "tsc && cp -R .env build/ && cp -R .env.local build/",
+    "build": "rm -rf build && tsc && cp -R .env build/ && cp -R .env.local build/ && cp -R Procfile build/",
     "postinstall": "tsc",
     "vercel build": "tsc",
-    "heroku-postbuild": "tsc && cp -R .env build/ && cp -R .env.local build/ && cp -R Procfile build/"
+    "heroku-postbuild": "rm -rf build && tsc && cp -R .env build/ && cp -R .env.local build/ && cp -R Procfile build/"
   },
   "engines": {
-    "node": "16.x"
+    "node": "16.x",
+    "npm": ">=7.7.0"
   },
   "author": "Polma Tambunan",
   "license": "ISC",
