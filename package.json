@@ -9,6 +9,7 @@
     "start-local": "cross-env NODE_ENV=local dotenv-load nodemon",
     "start": "cross-env NODE_ENV=local dotenv-load node build/server.js",
     "build": "tsc && cp -R .env build/ && cp -R .env.local build/",
+    "postinstall": "tsc",
     "vercel build": "tsc"
   },
   "engines": {
