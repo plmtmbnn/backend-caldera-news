@@ -40,6 +40,19 @@ export const NewsModel = sequelize.define('t_news', {
     type: DataTypes.DATE,
     allowNull: true
   },
+  is_recommendation: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false
+  },
+  is_trending: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false
+  },
+  total_visit: {
+    type: DataTypes.BIGINT,
+    allowNull: false,
+    defaultValue: 0
+  },
 }, {
   underscored: true,
   tableName: 't_news',

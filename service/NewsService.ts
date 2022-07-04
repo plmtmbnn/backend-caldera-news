@@ -20,7 +20,7 @@ export class NewsService {
       const uploadStatus: any = await FileHelper.saveAndResizeFile(
         req.body.file,
         "./image/news/"
-      );
+      );      
       image_url = uploadStatus.status ? uploadStatus.filename : undefined;
     }
 
@@ -110,9 +110,22 @@ export class NewsService {
   }
 
   static async getNewsList(req: Request, res: Response): Promise<any> {
+    const where: any = {};
+
+    if(req.body.category_id){ where.category_id = req.body.category_id}
+    if(req.body.title){ where.title = {[Op.iLike]: `%${req.body.title}%` }}
+    if(req.body.author_id){ where.author_id = req.body.author_id}
+    if(req.body.status !== undefined){ where.status = req.body.status}
+    if(req.body.is_recommendation !== undefined){ where.is_recommendation = req.body.is_recommendation}
+    if(req.body.is_trending !== undefined){ where.is_trending = req.body.is_trending}
+
+    const limit: number = undefined;
+    const offset: number = undefined;
     let queryPayload: queryPayload = {
-      where: {},
+      where,
       order: [["id", "ASC"]],
+      limit,
+      offset
     };
     const result: any = await newsQuery.getNewsDetail(queryPayload);
     

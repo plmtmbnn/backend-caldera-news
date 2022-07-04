@@ -77,9 +77,11 @@ export class NewsController {
         title: Joi.string().allow("", null).optional(),
         author_id: Joi.number().optional(),
         status: Joi.boolean().allow(null).optional(),
-        category_id: Joi.number().optional(),
-        limit: Joi.number().optional(),
-        offset: Joi.number().optional()
+        category_id: Joi.number().allow(null).optional(),
+        limit: Joi.number().allow(null).optional(),
+        offset: Joi.number().allow(null).optional(),
+        is_recommendation: Joi.boolean().allow(null).optional(),
+        is_trending: Joi.boolean().allow(null).optional(),
       });
 
       const validationResult: any = schema.validate(req.body);
