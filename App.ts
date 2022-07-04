@@ -7,10 +7,7 @@ import categoryRoute from './route/route-category';
 import cors from 'cors';
 import express from 'express';
 
-import session from 'express-session';
-import passport from 'passport';
-
-const FacebookStrategy = require('passport-facebook').Strategy;
+import fs from 'fs';
 
 class App {
   app: any;
@@ -26,39 +23,23 @@ class App {
       this.app.use(express.json({ limit: '100mb' }));
       this.app.use(express.urlencoded({ extended: true, limit: '100mb' }));
 
-      this.app.use(session({
-        resave: false,
-        saveUninitialized: true,
-        secret: 'SECRET'
-      }));
-
-      this.app.use(passport.initialize());
-      this.app.use(passport.session());
-
-      passport.serializeUser(function (user, cb) {
-        cb(null, user);
-      });
-
-      passport.deserializeUser(function (obj, cb) {
-        cb(null, obj);
-      });
-
-      passport.use(new FacebookStrategy({
-        clientID: '400441938763292',
-        clientSecret: '8d34b75e1873070e04cb4929c810414a',
-        callbackURL: 'http://localhost:2404/auth/login/facebook/callback'
-      }, function (accessToken, refreshToken, profile, callback) {
-        return callback(null, profile);
-      }
-      ));
-
       this.app.use('/auth', authRoute);
       this.app.use('/news', newsRoute);
       this.app.use('/category', categoryRoute);
       
-      this.app.use('/', router);      
+      this.app.use('/', router);
+
+      var avatarDir = './image/avatar';
+      var newsDir = './image/news';
+
+      if (!fs.existsSync(avatarDir)){
+          fs.mkdirSync(avatarDir, { recursive: true });
+      }
+      if (!fs.existsSync(newsDir)){
+          fs.mkdirSync(newsDir, { recursive: true });
+      }
     } catch (error) {
-      console.log('error', error);
+      console.log('[App][config] error:', error);
     }
   }
 }
