@@ -9,6 +9,12 @@ export const sequelize = new Sequelize(
     port: parseInt(process.env.DB_PORT),
     logging: false,
     dialect: 'postgres',
+    pool: {
+      max: 50,
+      min: 0,
+      acquire: 5000,
+      idle: 10000
+    },
     dialectOptions: {
       application_name: 'backend-caldera-news'
     }
