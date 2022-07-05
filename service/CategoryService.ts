@@ -16,7 +16,7 @@ export class CategoryService {
         status : true
       },
       order: [['id', 'ASC']],
-      attributes: ['id', 'category_name']
+      attributes: ['id', 'category_name', 'description']
     };
     const result: any = await newsCategoryQuery.findAndCountAll(queryPayload);
 
