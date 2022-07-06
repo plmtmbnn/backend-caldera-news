@@ -99,7 +99,6 @@ export class NewsService {
       where: { news_id: result.rows[0].id },
       order: [["created_at", "DESC"]],
     });
-    console.log('comments', comments.count);
     
     return {
       data: {
