@@ -54,7 +54,7 @@ class NewsQuery {
         },
       ],
     };
-    return await NewsModel.findAndCountAll(options);
+    return await NewsModel.findAll(options);
   }
 
   async update(value: any, payload: any) {

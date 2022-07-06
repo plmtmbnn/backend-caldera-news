@@ -129,9 +129,9 @@ export class NewsService {
     };
     const result: any = await newsQuery.getNewsDetail(queryPayload);
     
-    if (result.count === 0)
+    if (result?.length === 0)
       throw new CustomException(EXCEPTION_MESSAGE.DATA_NOT_FOUND);
 
-    return { data: result.rows };
+    return { data: result };
   }
 }
