@@ -1,4 +1,4 @@
-import { NewsCommentModel } from '../model/index';
+import { NewsCommentModel, UserModel } from '../model/index';
 // require('../model/associations/index');
 
 import { queryPayload } from '../../helper/QueryPayload';
@@ -11,7 +11,7 @@ class NewsCommentQuery {
   }
 
   async findAndCountAll(payload: queryPayload) {
-    return await NewsCommentModel.findAndCountAll({ ...payload });
+    return await NewsCommentModel.findAndCountAll({ ...payload, include: { model: UserModel, required: true} });
   }
 
   async update(value: any, payload: any) {
