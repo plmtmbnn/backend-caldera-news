@@ -30,7 +30,8 @@ export const NewsModel = sequelize.define('t_news', {
   },
   status: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: true,
+    defaultValue: 'DRAFT'
   },
   category_id: {
     type: DataTypes.INTEGER,

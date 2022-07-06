@@ -76,7 +76,7 @@ export class NewsController {
         news_id: Joi.string().uuid().allow(null).optional(),
         title: Joi.string().allow("", null).optional(),
         author_id: Joi.number().optional(),
-        status: Joi.boolean().allow(null).optional(),
+        status: Joi.string().allow(null, 'PUBLISH', 'DRAFT').optional(),
         category_id: Joi.number().allow(null).optional(),
         limit: Joi.number().allow(null).optional(),
         offset: Joi.number().allow(null).optional(),
