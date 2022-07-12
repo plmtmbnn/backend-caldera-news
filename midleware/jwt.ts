@@ -7,7 +7,7 @@ function getSecret () {
 export function token (userParam: any): any {
   let encodedToken: any = null;
   try {
-    encodedToken = jwt.sign({ data: userParam }, getSecret(), { expiresIn: '23h' });
+    encodedToken = jwt.sign({ data: userParam }, getSecret());
   } catch (error) {
     console.log('jwt.ts - token', error);
   }
@@ -16,7 +16,7 @@ export function token (userParam: any): any {
 
 export function verifyToken (token: string) {
   var userLogin = null;
-  try {
+  try {    
     var decodedToken: any = jwt.verify(token, getSecret());
     userLogin = decodedToken.data;
     return userLogin;
