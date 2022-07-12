@@ -13,7 +13,7 @@ export const sequelize = new Sequelize(
       max: 50,
       min: 0,
       acquire: 5000,
-      idle: 10000
+      idle: 60000
     },
     dialectOptions: {
       application_name: 'backend-caldera-news'

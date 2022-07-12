@@ -59,6 +59,7 @@ export class AuthService {
               avatar_url: result.rows[0].avatar_url,
               created_at: result.rows[0].created_at,
               isAdmin,
+              author_id: author.count > 0 ? author.rows[0].id : null,
               token: createdToken
             }
           });
