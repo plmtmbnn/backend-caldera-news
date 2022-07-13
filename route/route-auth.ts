@@ -5,7 +5,6 @@ const router = express.Router();
 // Controller
 import { authController } from '../controller/AuthController';
 
-
 router.post('/login', authController.login);
 router.post('/register', authController.register);
 

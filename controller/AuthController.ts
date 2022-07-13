@@ -45,7 +45,7 @@ export class AuthController {
           });
 
           req.body = { ...body, ...files };
-
+          
           const validationResult: any = schema.validate(req.body);
           if (
             validationResult.error &&
@@ -59,6 +59,7 @@ export class AuthController {
             await AuthService.register(req, res);          
           }
         } else {
+          console.log('err', err);          
           ResponseHandler.send(res, new CustomException({
             ...EXCEPTION_MESSAGE.SYSTEM_ERROR
           }), true);

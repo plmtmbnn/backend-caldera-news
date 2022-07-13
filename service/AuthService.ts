@@ -100,7 +100,7 @@ export class AuthService {
         await transaction.commit();
         return ResponseHandler.send(res, {});
       } else {
-        return ResponseHandler.send(res, new CustomException(EXCEPTION_MESSAGE.USER_NOT_REGISTERED_YET), true);
+        return ResponseHandler.send(res, new CustomException(EXCEPTION_MESSAGE.EMAIL_ALREADY_USED), true);
       }
     } catch (error) {
       await transaction.rollback();

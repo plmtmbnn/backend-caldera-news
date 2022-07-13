@@ -119,8 +119,8 @@ export class NewsService {
     if(req.body.is_recommendation !== undefined){ where.is_recommendation = req.body.is_recommendation}
     if(req.body.is_trending !== undefined){ where.is_trending = req.body.is_trending}
 
-    const limit: number = undefined;
-    const offset: number = undefined;
+    const limit: number = req.body.limit || undefined;
+    const offset: number =  req.body.offset || undefined;
     let queryPayload: queryPayload = {
       where,
       order: [["id", "ASC"]],
