@@ -108,4 +108,99 @@ export class AuthService {
       ResponseHandler.send(res, error, true);
     }
   }
+
+  static async listUser(req: Request, res: Response): Promise<any> {
+    const transaction = await sequelize.transaction();
+
+    try {
+        let where: any = {};
+        if(req.body.email){
+          where.email = {
+            [Op.iLike]: `%${req.body.email}%`
+          };
+        }
+        if(req.body.full_name){
+          where.full_name = {
+            [Op.iLike]: `%${req.body.full_name}%`
+          };
+        }
+
+        let queryPayload: queryPayload = {
+          where,
+          order: [
+            ['full_name', 'ASC']
+          ]
+        };
+
+        let result: any = await userQuery.findAndCountAllWithAuthor(queryPayload);
+        
+        let data: any = [];
+        Array(...result.rows).map((e)=> {
+          const item: any = e.toJSON();          
+          data.push({
+              ...item,
+              user_status: item.t_author ? 'Admin / Penulis' : 'Pembaca'
+            })
+        });
+
+          return ResponseHandler.send(res, {
+            data
+          });
+          ;
+    } catch (error) {
+      await transaction.rollback();
+      console.log('[AuthService][listUser]', error);
+      return ResponseHandler.send(res, error, true);
+    }
+  }
+
+  static async updateUserStatus(req: Request, res: Response): Promise<any> {
+    const transaction = await sequelize.transaction();
+
+    try {
+        let queryPayload: queryPayload = {
+          where: {
+            id: req.body.user_id
+          },
+          order: [
+            ['full_name', 'ASC']
+          ]
+        };
+
+        let result: any = await userQuery.findAndCountAllWithAuthorOptional(queryPayload);
+                
+        if(req.body.action === 'SET_TO_AUTHOR') {
+          let author_id: number = null;
+          let full_name: string = null;
+          Array(...result.rows).map((e)=> {            
+            const item: any = e.toJSON();
+
+            full_name = item.full_name;
+            author_id = item.t_author && item.t_author.id ? item.t_author.id : null;
+          });
+          if(author_id){
+              await authorQuery.update({ status: true }, { where: { id: author_id}, transaction });
+          } else {
+            await authorQuery.insert({ status: true, user_id: req.body.user_id, author_name: full_name }, { transaction });            
+          }
+        } else {
+          let author_id: number = null;
+
+          Array(...result.rows).map((e)=> {
+            const item: any = e.toJSON();
+
+            author_id = item.t_author && item.t_author.id ? item.t_author.id : null;            
+          });          
+          
+          if(author_id){
+            await authorQuery.update({ status: false }, { where: { id: author_id}, transaction });
+          }
+        }
+    await transaction.commit();
+    } catch (error) {
+      await transaction.rollback();
+      console.log('[AuthService][updateUserStatus]', error);
+      return ResponseHandler.send(res, error, true);
+    }
+  }
 }

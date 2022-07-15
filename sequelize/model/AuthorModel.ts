@@ -16,6 +16,11 @@ export const AuthorModel = sequelize.define('t_author', {
     type: DataTypes.STRING,
     allowNull: true
   },
+  status: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  }
 }, {
   underscored: true,
   tableName: 't_author',

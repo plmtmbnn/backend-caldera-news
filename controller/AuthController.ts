@@ -70,6 +70,55 @@ export class AuthController {
       ResponseHandler.send(res, error, true);
     }
   }
+  
+  async listUser (req: Request, res: Response): Promise<void> {
+    try {
+          const schema: Joi.Schema = Joi.object({
+            email: Joi.string().allow(null, '').optional(),
+            full_name: Joi.string().allow(null, '').optional()
+          });
+          const validationResult: any = schema.validate(req.body);
+          if (
+            validationResult.error &&
+            validationResult.error.details.length > 0
+          ) {
+            ResponseHandler.send(res, new CustomException({
+              ...EXCEPTION_MESSAGE.MISSING_REQUIRED_DATA,
+              error: validationResult.error.details,
+            }), true);
+          } else {
+            await AuthService.listUser(req, res);          
+          }
+    } catch (error) {
+      console.log("[AuthController][listUser]", error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
+
+  async updateUserStatus (req: Request, res: Response): Promise<void> {
+    try {
+      const schema: Joi.Schema = Joi.object({
+        action: Joi.string().required(),
+        user_id: Joi.number().required()
+      });
+      const validationResult: any = schema.validate(req.body);
+          if (
+            validationResult.error &&
+            validationResult.error.details.length > 0
+          ) {
+            ResponseHandler.send(res, new CustomException({
+              ...EXCEPTION_MESSAGE.MISSING_REQUIRED_DATA,
+              error: validationResult.error.details,
+            }), true);
+          } else {
+            const result: any = await AuthService.updateUserStatus(req, res);
+            ResponseHandler.send(res, result);
+          }
+    } catch (error) {
+      console.log("[AuthController][updateUserStatus]", error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
 }
 
 export const authController = new AuthController();
