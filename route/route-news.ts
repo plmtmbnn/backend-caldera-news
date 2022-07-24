@@ -6,7 +6,7 @@ import { isLoggedIn } from '../midleware/middleware';
 // Controller
 import { newsController } from '../controller/NewsController';
 
-router.post('/upsert', isLoggedIn ,newsController.upsertNews);
+router.post('/upsert', isLoggedIn, newsController.upsertNews);
 router.get('/show/:news_url', newsController.getNews);
 router.post('/list', newsController.getNewsList);
 
