@@ -20,6 +20,11 @@ export const AuthorModel = sequelize.define('t_author', {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false
+  },
+  is_admin: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
   }
 }, {
   underscored: true,

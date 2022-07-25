@@ -33,7 +33,7 @@ export class AuthService {
 
         let result: any = await userQuery.findAndCountAll(queryPayload);
 
-        if (result.count === 0) {          
+        if (result.count === 0) {
           return ResponseHandler.send(res, new CustomException(EXCEPTION_MESSAGE.USER_NOT_REGISTERED_YET), true);
         }
         
@@ -45,7 +45,11 @@ export class AuthService {
             where: { user_id: result.rows[0].id }
           });
           let isAdmin: boolean = false;
-          if (author.count > 0) isAdmin = true;
+          let isAuthor: boolean = false;
+          if (author.count > 0) {
+            isAdmin = result.rows[0].is_admin;
+            isAuthor = true;
+          }
 
           const createdToken: any = token({ user_id: result.rows[0].id, email: req.body.email });
 
@@ -59,6 +63,7 @@ export class AuthService {
               avatar_url: result.rows[0].avatar_url,
               created_at: result.rows[0].created_at,
               isAdmin,
+              isAuthor,
               author_id: author.count > 0 ? author.rows[0].id : null,
               token: createdToken
             }
