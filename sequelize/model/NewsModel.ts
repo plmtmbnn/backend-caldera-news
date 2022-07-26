@@ -24,6 +24,10 @@ export const NewsModel = sequelize.define('t_news', {
     type: DataTypes.STRING,
     allowNull: true
   },
+  image_desc: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
   content: {
     type: DataTypes.TEXT,
     allowNull: true

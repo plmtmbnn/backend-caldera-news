@@ -26,6 +26,7 @@ export class NewsController {
             content: Joi.string().allow("", null).optional(),
             status: Joi.string().allow(null).optional(),
             category_id: Joi.number().optional(),
+            image_desc: Joi.string().allow("", null).optional(),
             posted_at: Joi.string().optional(),
             file: Joi.object({
               type: Joi.alternatives().try(
