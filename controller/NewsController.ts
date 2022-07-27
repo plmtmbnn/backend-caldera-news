@@ -72,6 +72,16 @@ export class NewsController {
     }
   }
 
+  async getNewsById(req: Request, res: Response): Promise<void> {
+    try {
+      const result: any = await NewsService.getNewsById(req, res);
+      ResponseHandler.send(res, result);
+    } catch (error) {
+      console.log("[NewsController][getNewsById]", error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
+
   async getNewsList(req: Request, res: Response): Promise<void> {
     try {
       const schema: Joi.Schema = Joi.object({

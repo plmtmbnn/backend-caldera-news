@@ -19,6 +19,10 @@ export const NewsCategoryModel = sequelize.define('t_news_category', {
   description: {
     type: DataTypes.STRING,
     allowNull: true
+  },
+  is_top_feature: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 }, {
   underscored: true,

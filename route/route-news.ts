@@ -8,6 +8,7 @@ import { newsController } from '../controller/NewsController';
 
 router.post('/upsert', isLoggedIn, newsController.upsertNews);
 router.get('/show/:news_url', newsController.getNews);
+router.get('/show/by-id/:id', newsController.getNewsById);
 router.post('/list', newsController.getNewsList);
 
 router.get('/like/get/:news_id', newsController.getLikes);

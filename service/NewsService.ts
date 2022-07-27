@@ -111,6 +111,36 @@ export class NewsService {
     };
   }
 
+  static async getNewsById(req: Request, res: Response): Promise<any> {
+    let queryPayload: queryPayload = {
+      where: {
+        id: req.params.id,
+      },
+      order: [["id", "ASC"]],
+    };
+    const result: any = await newsQuery.findAndCountAll(queryPayload);
+
+    if (result.count === 0)
+      throw new CustomException(EXCEPTION_MESSAGE.DATA_NOT_FOUND);
+
+    const likes: any = await newsLikeQuery.findAndCountAll({
+      where: { news_id: result.rows[0].id },
+    });
+
+    const comments: any = await newsCommentQuery.findAndCountAll({
+      where: { news_id: result.rows[0].id },
+      order: [["created_at", "DESC"]],
+    });
+    
+    return {
+      data: {
+        news: result.rows[0],
+        likes: likes.count,
+        comments: comments.count
+      },
+    };
+  }
+
   static async getNewsList(req: Request, res: Response): Promise<any> {
     const where: any = {};
 
