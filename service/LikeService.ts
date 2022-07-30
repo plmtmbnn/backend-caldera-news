@@ -1,5 +1,11 @@
 import { Request, Response } from 'express';
 
+import { EXCEPTION_MESSAGE } from "../helper/EXCEPTION_MESSAGE";
+import { CustomException } from "../helper/CustomException";
+
+import fs from 'fs';
+import path from 'path';
+
 import {
   newsLikeQuery
 } from '../sequelize/query';
@@ -44,5 +50,23 @@ export class LikeService {
         likes: likes.rows
       }
     }
+  }
+
+  static async getImage(req: Request, res: Response): Promise<any> {
+    try {
+      const path_name: string = req.params.path_name;
+      const file_name: string = req.params.file_name;
+      let current_path: string = null;
+      
+      if(path_name && file_name){
+        current_path = path.join(__dirname, '..', 'image',`${path_name}/${file_name}`);
+      }
+      const binary = fs.readFileSync(current_path);
+      res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+      res.end(binary, 'binary');
+      
+    } catch (error) {
+      throw new CustomException(EXCEPTION_MESSAGE.DATA_NOT_FOUND);
+    }  
   }
 }

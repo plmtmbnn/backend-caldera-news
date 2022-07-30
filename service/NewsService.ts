@@ -145,7 +145,7 @@ export class NewsService {
     const where: any = {};
 
     if(req.body.category_id){ where.category_id = req.body.category_id}
-    if(req.body.title){ where.title = req.body.title} 
+    if(req.body.title){ where.title = { [Op.iLike]: `%${req.body.title}%` }} 
     if(req.body.author_id){ where.author_id = req.body.author_id}
     if(req.body.status !== undefined){ where.status = req.body.status}
     if(req.body.is_recommendation !== undefined){ where.is_recommendation = req.body.is_recommendation}

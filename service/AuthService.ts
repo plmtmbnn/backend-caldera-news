@@ -46,8 +46,8 @@ export class AuthService {
           });
           let isAdmin: boolean = false;
           let isAuthor: boolean = false;
-          if (author.count > 0) {
-            isAdmin = result.rows[0].is_admin;
+          if (author.count > 0) {            
+            isAdmin = author.rows[0].is_admin;
             isAuthor = true;
           }
 
@@ -141,10 +141,19 @@ export class AuthService {
         
         let data: any = [];
         Array(...result.rows).map((e)=> {
-          const item: any = e.toJSON();          
+          const item: any = e.toJSON();
+          let isAdmin: boolean = false;
+          let isAuthor: boolean = false;
+          if(item.t_author){            
+            isAuthor = true;
+            if(item.t_author.is_admin){
+              isAdmin = true;
+            }
+          }
+          
           data.push({
               ...item,
-              user_status: item.t_author ? 'Admin / Penulis' : 'Pembaca'
+              user_status: isAuthor ? isAdmin ? 'Admin' : 'Penulis' : 'Pembaca'
             })
         });
 

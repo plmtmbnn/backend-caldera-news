@@ -187,6 +187,15 @@ export class NewsController {
       ResponseHandler.send(res, error, true);
     }
   }
+
+  async getImage(req: Request, res: Response): Promise<void> {
+    try {
+      await LikeService.getImage(req, res);
+    } catch (error) {
+      console.log("[NewsController][getImage]", error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
 }
 
 export const newsController = new NewsController();

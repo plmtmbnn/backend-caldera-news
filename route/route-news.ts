@@ -17,4 +17,6 @@ router.post('/like/upsert', isLoggedIn, newsController.upsertLike);
 router.get('/comment/get/:news_id', newsController.getComment);
 router.post('/comment/upsert', isLoggedIn, newsController.upsertComment);
 
+router.get('/image/:path_name/:file_name', newsController.getImage);
+
 export default router;
