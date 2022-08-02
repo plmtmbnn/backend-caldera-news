@@ -19,7 +19,7 @@ module.exports = {
         SERVICE_NAME: 'backend-caldera',
         NODE_ENV: 'production',
         PORT: 8081,
-        DB_HOST: "bzagedrxk7ies2pkecjs-postgresql.services.clever-cloud.com",
+        DB_HOST: "localhost",
         DB_NAME: "bzagedrxk7ies2pkecjs",
         DB_USER: "u2famtvno41d2r05hqh8",
         DB_PASS: "LgOAHmctc3vQJDxE6UFk",
