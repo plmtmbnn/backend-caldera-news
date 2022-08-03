@@ -22,14 +22,12 @@ class NewsCategoryQuery {
   }
 
   async syncAllTable() {
-    await Promise.all([
-      NewsCategoryModel.sync(),
-      AuthorModel.sync(), 
-      NewsCommentModel.sync(), 
-      NewsLikeModel.sync(), 
-      NewsModel.sync(), 
-      UserModel.sync()
-    ]);
+    await UserModel.sync();
+    await NewsCategoryModel.sync();
+    await AuthorModel.sync();
+    await NewsModel.sync(); 
+    await NewsCommentModel.sync(); 
+    await NewsLikeModel.sync(); 
   }
 }
 
