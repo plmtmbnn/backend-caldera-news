@@ -217,4 +217,40 @@ export class AuthService {
       return ResponseHandler.send(res, error, true);
     }
   }
+
+  static async addAsAdmin(req: Request, res: Response): Promise<any> {
+    const transaction = await sequelize.transaction();
+
+    try {
+        let queryPayload: queryPayload = {
+          where: {
+            id: req.body.user_id
+          },
+          order: [
+            ['full_name', 'ASC']
+          ]
+        };
+
+        let result: any = await userQuery.findAndCountAllWithAuthorOptional(queryPayload);
+                
+        let author_id: number = null;
+        let full_name: string = null;
+        Array(...result.rows).map((e)=> {
+          const item: any = e.toJSON();
+
+          full_name = item.full_name;
+          author_id = item.t_author && item.t_author.id ? item.t_author.id : null;
+        });
+        if(author_id){
+            await authorQuery.update({ status: true, is_admin: true }, { where: { id: author_id}, transaction });
+        } else {
+          await authorQuery.insert({ status: true, user_id: req.body.user_id, author_name: full_name, is_admin: true }, { transaction });           
+        }        
+    await transaction.commit();
+    } catch (error) {
+      await transaction.rollback();
+      console.log('[AuthService][addAsAdmin]', error);
+      return ResponseHandler.send(res, error, true);
+    }
+  }
 }

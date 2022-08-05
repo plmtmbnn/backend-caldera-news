@@ -4,6 +4,7 @@ import { newsCategoryQuery } from './NewsCategoryQuery';
 import { newsCommentQuery } from './NewsCommentQuery';
 import { newsLikeQuery } from './NewsLikeQuery';
 import { newsQuery } from './NewsQuery';
+import { newsViewLogQuery } from './NewsViewLogQuery';
 
 export {
   userQuery,
@@ -11,5 +12,6 @@ export {
   newsCategoryQuery,
   newsCommentQuery,
   newsLikeQuery,
-  newsQuery
+  newsQuery,
+  newsViewLogQuery
 };

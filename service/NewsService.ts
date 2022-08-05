@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { EXCEPTION_MESSAGE } from "../helper/EXCEPTION_MESSAGE";
 import { CustomException } from "../helper/CustomException";
 
-import { newsQuery, newsCommentQuery, newsLikeQuery } from "../sequelize/query";
+import { newsQuery, newsCommentQuery, newsLikeQuery, newsViewLogQuery } from "../sequelize/query";
 import { sequelize } from "../sequelize/init";
 import { Op, col, fn, where, literal } from "sequelize";
 
@@ -102,6 +102,12 @@ export class NewsService {
       order: [["created_at", "DESC"]],
     });
     
+    await sequelize.transaction(async (transaction: any) => {
+        await newsViewLogQuery.insert({
+          news_id: result.rows[0].id
+        }, {transaction});
+    });
+
     return {
       data: {
         news: result.rows[0],
@@ -145,7 +151,7 @@ export class NewsService {
     const where: any = {};
 
     if(req.body.category_id){ where.category_id = req.body.category_id}
-    if(req.body.title){ where.title = { [Op.iLike]: `%${req.body.title}%` }} 
+    if(req.body.title){ where.title = req.body.title}
     if(req.body.author_id){ where.author_id = req.body.author_id}
     if(req.body.status !== undefined){ where.status = req.body.status}
     if(req.body.is_recommendation !== undefined){ where.is_recommendation = req.body.is_recommendation}

@@ -4,6 +4,7 @@ import { NewsCommentModel } from './NewsCommentModel';
 import { NewsLikeModel } from './NewsLikeModel';
 import { NewsModel } from './NewsModel';
 import { NewsCategoryModel } from './NewsCategoryModel';
+import { NewsViewLogModel } from './NewsViewLogModel';
 
 export {
   UserModel,
@@ -11,5 +12,6 @@ export {
   NewsCommentModel,
   NewsLikeModel,
   NewsModel,
-  NewsCategoryModel
+  NewsCategoryModel,
+  NewsViewLogModel
 };

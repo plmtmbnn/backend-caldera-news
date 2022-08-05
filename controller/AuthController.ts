@@ -119,6 +119,16 @@ export class AuthController {
       ResponseHandler.send(res, error, true);
     }
   }
+
+  async addAsAdmin (req: Request, res: Response): Promise<void> {
+    try {
+      const result: any = await AuthService.addAsAdmin(req, res);
+      ResponseHandler.send(res, result);
+    } catch (error) {
+      console.log("[AuthController][addAsAdmin]", error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
 }
 
 export const authController = new AuthController();
