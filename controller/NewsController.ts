@@ -21,12 +21,14 @@ export class NewsController {
           const schema: Joi.Schema = Joi.object({
             news_id: Joi.string().uuid().allow(null).optional(),
             title: Joi.string().allow("", null).optional(),
-            author_id: Joi.number().required(),
+            author_id: Joi.number().optional(),
             news_url: Joi.string().allow("", null).optional(),
             content: Joi.string().allow("", null).optional(),
             status: Joi.string().allow(null).optional(),
             category_id: Joi.number().optional(),
             image_desc: Joi.string().allow("", null).optional(),
+            is_recommendation: Joi.boolean().allow(null).optional(),
+            is_trending: Joi.boolean().allow(null).optional(),
             posted_at: Joi.string().optional(),
             file: Joi.object({
               type: Joi.alternatives().try(
