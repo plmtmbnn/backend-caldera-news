@@ -174,6 +174,7 @@ export class NewsService {
     if (result?.length === 0)
       throw new CustomException(EXCEPTION_MESSAGE.DATA_NOT_FOUND);
 
-    return { data: result };
+    const count: number = result && result.length && result.length > 0 ? parseFloat(result[0].total_data) : 0;
+    return { data: result, count};
   }
 }

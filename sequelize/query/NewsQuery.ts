@@ -87,12 +87,12 @@ class NewsQuery {
 
   if(payload.limit){ 
     additionalQuery = `${additionalQuery} LIMIT ${payload.limit} `;
-    additionalQueryLimitOffset = `${additionalQueryLimitOffset} LIMIT ${payload.limit} `;
+    // additionalQueryLimitOffset = `${additionalQueryLimitOffset} LIMIT ${payload.limit} `;
   }
 
-  if(payload.offset){ 
+  if(payload.offset || payload.offset === 0){ 
     additionalQuery = `${additionalQuery} OFFSET ${payload.offset} `;
-    additionalQueryLimitOffset = `${additionalQueryLimitOffset} OFFSET ${payload.offset} `;
+    // additionalQueryLimitOffset = `${additionalQueryLimitOffset} OFFSET ${payload.offset} `;
   }
 
   const query: string = `
@@ -120,7 +120,8 @@ FROM
                   "is_trending",
                   "total_visit",
                   t2.author_name,
-                  category_name
+                  category_name,
+                  count(*) over() as total_data
               FROM
                   "t_news" t1
                   INNER JOIN t_author t2 ON t1.author_id = t2.id
@@ -144,7 +145,8 @@ FROM
           total_visit,
           author_name,
           category_name,
-          b.id
+          b.id,
+          total_data
   ) c
   LEFT JOIN t_news_comment d ON d.news_id = c.id
 GROUP BY
@@ -162,10 +164,11 @@ GROUP BY
   "total_visit",
   author_name,
   category_name,
-  c.total_likes
-${additionalQueryLimitOffset}
+  c.total_likes,
+  total_data
+  ${additionalQueryLimitOffset}
   `;
-
+  
   return await sequelize.query(
     query,
     {
