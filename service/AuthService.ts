@@ -224,7 +224,7 @@ export class AuthService {
     try {
         let queryPayload: queryPayload = {
           where: {
-            id: req.body.user_id
+            id: req.params.user_id
           },
           order: [
             ['full_name', 'ASC']
@@ -244,7 +244,7 @@ export class AuthService {
         if(author_id){
             await authorQuery.update({ status: true, is_admin: true }, { where: { id: author_id}, transaction });
         } else {
-          await authorQuery.insert({ status: true, user_id: req.body.user_id, author_name: full_name, is_admin: true }, { transaction });           
+          await authorQuery.insert({ status: true, user_id: req.params.user_id, author_name: full_name, is_admin: true }, { transaction });           
         }        
     await transaction.commit();
     } catch (error) {
