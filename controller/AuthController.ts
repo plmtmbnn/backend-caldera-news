@@ -41,7 +41,7 @@ export class AuthController {
               type: Joi.alternatives().try(
                 Joi.string().regex(/image/)
               )
-            }).options({ allowUnknown: true }).optional()
+            }).options({ allowUnknown: true }).allow(null, '').optional()
           });
 
           req.body = { ...body, ...files };

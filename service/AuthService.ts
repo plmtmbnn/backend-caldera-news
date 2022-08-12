@@ -89,7 +89,7 @@ export class AuthService {
       let result: any = await userQuery.findAndCountAll(queryPayload);
       if (result.count === 0) {
         let avatar_url: string = undefined;
-    if (req.body.avatar_file) {
+    if (req.body.avatar_file && req.body.avatar_file !== '') {
       const uploadStatus: any = await FileHelper.saveAndResizeFile(
         req.body.avatar_file,
         "./image/avatar/"
