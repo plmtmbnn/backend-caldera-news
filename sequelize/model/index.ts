@@ -5,6 +5,7 @@ import { NewsLikeModel } from './NewsLikeModel';
 import { NewsModel } from './NewsModel';
 import { NewsCategoryModel } from './NewsCategoryModel';
 import { NewsViewLogModel } from './NewsViewLogModel';
+import { ImageModel } from './ImageModel';
 
 export {
   UserModel,
@@ -13,5 +14,6 @@ export {
   NewsLikeModel,
   NewsModel,
   NewsCategoryModel,
-  NewsViewLogModel
+  NewsViewLogModel,
+  ImageModel
 };

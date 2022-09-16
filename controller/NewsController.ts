@@ -198,6 +198,57 @@ export class NewsController {
       ResponseHandler.send(res, error, true);
     }
   }
+
+  async getImageByNewsId(req: Request, res: Response): Promise<void> {
+    try {      
+      const result: any = await LikeService.getImageByNewsId(req, res);
+      ResponseHandler.send(res, result);
+    } catch (error) {
+      console.log("[NewsController][getImageByNewsId]", error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
+
+  async uploadImage(req: Request, res: Response): Promise<void> {
+    try {
+      const form: any = formidable({ multiples: true });
+      await form.parse(req, async (err: any, body: any, files: any) => {
+        if (!err) {
+          const schema: Joi.Schema = Joi.object({
+            news_id: Joi.string().uuid().required(),
+            file: Joi.object({
+              type: Joi.alternatives().try(
+                Joi.string().regex(/image/)
+              )
+            }).options({ allowUnknown: true }).optional()
+          });
+
+          req.body = { ...body, ...files };
+
+          const validationResult: any = schema.validate(req.body);
+          if (
+            validationResult.error &&
+            validationResult.error.details.length > 0
+          ) {
+            ResponseHandler.send(res, new CustomException({
+              ...EXCEPTION_MESSAGE.MISSING_REQUIRED_DATA,
+              error: validationResult.error.details,
+            }), true);
+          } else {
+            const result: any = await NewsService.uploadImage(req, res);
+            ResponseHandler.send(res, result);  
+          }
+        } else {
+          ResponseHandler.send(res, new CustomException({
+            ...EXCEPTION_MESSAGE.SYSTEM_ERROR
+          }), true);
+        }
+      });
+    } catch (error) {
+      console.log("[NewsController][uploadImage]", error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
 }
 
 export const newsController = new NewsController();

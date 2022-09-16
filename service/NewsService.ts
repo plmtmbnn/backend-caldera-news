@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { EXCEPTION_MESSAGE } from "../helper/EXCEPTION_MESSAGE";
 import { CustomException } from "../helper/CustomException";
 
-import { newsQuery, newsCommentQuery, newsLikeQuery, newsViewLogQuery } from "../sequelize/query";
+import { newsQuery, newsCommentQuery, newsLikeQuery, newsViewLogQuery, imageQuery } from "../sequelize/query";
 import { sequelize } from "../sequelize/init";
 import { Op, col, fn, where, literal } from "sequelize";
 
@@ -15,17 +15,17 @@ import moment from "moment";
 
 export class NewsService {
   static async upsertNews(req: Request, res: Response): Promise<any> {
-    let image_url: string = undefined;
-    if (req.body.file) {
-      const uploadStatus: any = await FileHelper.saveAndResizeFile(
-        req.body.file,
-        "./image/news/"
-      );      
-      image_url = uploadStatus.status ? uploadStatus.filename : undefined;
-    }
-
     const transaction = await sequelize.transaction();
     try {
+      let image_url: string = undefined;
+      if (req.body.file) {
+        const uploadStatus: any = await FileHelper.saveAndResizeFile(
+          req.body.file,
+          "./image/news/"
+        );      
+        image_url = uploadStatus.status ? uploadStatus.filename : undefined;
+      }
+
       let checkNews: any = null;
       if (req.body.news_id) {
         checkNews = await newsQuery.findAndCountAll({
@@ -176,5 +176,50 @@ export class NewsService {
 
     const count: number = result && result.length && result.length > 0 ? parseFloat(result[0].total_data) : 0;
     return { data: result, count};
+  }
+
+  static async uploadImage(req: Request, res: Response): Promise<any> {
+    const transaction = await sequelize.transaction();
+    try {
+      let checkNews: any = null;
+      if (req.body.news_id) {
+        checkNews = await newsQuery.findAndCountAll({
+          where: { id: req.body.news_id },
+          transaction,
+        });        
+      }
+
+      if (req.body.news_id && checkNews && checkNews.count === 0) {
+        throw new CustomException(EXCEPTION_MESSAGE.DATA_NOT_FOUND);
+      }
+      
+      let image_url: string = undefined;
+      if (req.body.file) {
+        const uploadStatus: any = await FileHelper.saveAndResizeFile(
+          req.body.file,
+          "./image/news/"
+        );
+        image_url = uploadStatus.status ? uploadStatus.filename : undefined;
+      }      
+
+        await imageQuery.insert(
+          {
+            image_url,
+            news_id: req.body.news_id
+          },
+          {
+            transaction,
+          }
+        );
+      
+      await transaction.commit();
+      return {
+        image_url
+      }
+    } catch (error) {
+      await transaction.rollback();
+      console.log("[NewsService][uploadImage]", error);
+      throw new CustomException(EXCEPTION_MESSAGE.SYSTEM_ERROR);
+    }
   }
 }

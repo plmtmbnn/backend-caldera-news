@@ -7,7 +7,8 @@ import fs from 'fs';
 import path from 'path';
 
 import {
-  newsLikeQuery
+  newsLikeQuery,
+  imageQuery
 } from '../sequelize/query';
 
 import { sequelize } from "../sequelize/init";
@@ -68,5 +69,18 @@ export class LikeService {
     } catch (error) {
       throw new CustomException(EXCEPTION_MESSAGE.DATA_NOT_FOUND);
     }  
+  }
+
+  static async getImageByNewsId(req: Request, res: Response): Promise<any> {
+    const images: any = await imageQuery.findAndCountAll({
+      where: { news_id: req.params.news_id },
+    });
+    
+    return {
+      data: {
+        images_count: images.count,
+        images: images.rows
+      }
+    }
   }
 }
