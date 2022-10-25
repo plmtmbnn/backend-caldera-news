@@ -22,8 +22,6 @@ const redisController: RedisController = new RedisController();
 
 export class AuthService {
   static async login(req: Request, res: Response): Promise<any> {
-    const transaction = await sequelize.transaction();
-
     try {
         let queryPayload: queryPayload = {
           where: {
@@ -70,7 +68,6 @@ export class AuthService {
           });
           ;
     } catch (error) {
-      await transaction.rollback();
       console.log('[AuthService][login]', error);
       return ResponseHandler.send(res, error, true);
     }
