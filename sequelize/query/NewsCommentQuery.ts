@@ -21,6 +21,10 @@ class NewsCommentQuery {
   async insert(value: any, payload: queryPayload) {
     return await NewsCommentModel.create(value, { ...payload });
   }
+  
+  async delete(payload: queryPayload) {
+    return await NewsCommentModel.destroy({ ...payload });
+  }
 }
 
 export const newsCommentQuery = new NewsCommentQuery();

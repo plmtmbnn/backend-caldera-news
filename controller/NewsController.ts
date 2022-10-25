@@ -153,6 +153,16 @@ export class NewsController {
     }
   }
 
+  async deleteComment(req: Request, res: Response): Promise<void> {
+    try {
+      const result: any = await CommentService.deleteComment(req, res);
+      ResponseHandler.send(res, result);
+    } catch (error) {
+      console.log("[NewsController][deleteComment]", error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
+
   async upsertComment(req: Request, res: Response): Promise<void> {
     try {
       const schema: Joi.Schema = Joi.object({

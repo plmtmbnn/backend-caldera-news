@@ -6,7 +6,7 @@ import {
 
 import { sequelize } from "../sequelize/init";
 
-export class CommentService {
+export class CommentService {  
   static async upsertComment(req: Request, res: Response): Promise<any> {
     const transaction = await sequelize.transaction();
     try {
@@ -35,6 +35,22 @@ export class CommentService {
         comments_count: comments.count,
         comments: comments.rows
       }
+    }
+  }
+
+  static async deleteComment(req: Request, res: Response): Promise<any> {
+    const transaction = await sequelize.transaction();
+    try {
+        await newsCommentQuery.delete({          
+          where: {
+            id: req.params.id
+          },
+          transaction
+        });
+      await transaction.commit();
+    } catch (error) {
+      await transaction.rollback();
+        console.log('[CommentService][upsertComment]', error);
     }
   }
 }
