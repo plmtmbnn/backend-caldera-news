@@ -16,7 +16,7 @@ router.post('/like/upsert', isLoggedIn, newsController.upsertLike);
 
 router.get('/comment/get/:news_id', newsController.getComment);
 router.post('/comment/upsert', isLoggedIn, newsController.upsertComment);
-router.post('/comment/delete/:id', isLoggedIn, newsController.deleteComment);
+router.get('/comment/delete/:id', isLoggedIn, newsController.deleteComment);
 
 router.get('/image/:path_name/:file_name', newsController.getImage);
 router.post('/image/upload', newsController.uploadImage);
