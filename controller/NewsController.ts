@@ -22,7 +22,7 @@ export class NewsController {
             news_id: Joi.string().uuid().allow(null).optional(),
             title: Joi.string().allow("", null).optional(),
             author_id: Joi.number().optional(),
-            origin_author_name: Joi.number().optional(),
+            origin_author_name: Joi.string().allow("", null).optional(),
             news_url: Joi.string().allow("", null).optional(),
             content: Joi.string().allow("", null).optional(),
             status: Joi.string().allow(null).optional(),
