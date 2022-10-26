@@ -41,6 +41,10 @@ export const NewsModel = sequelize.define('t_news', {
     type: DataTypes.INTEGER,
     allowNull: true
   },
+  origin_author_name: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
   posted_at: {
     type: DataTypes.DATE,
     allowNull: true

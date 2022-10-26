@@ -50,7 +50,8 @@ export class NewsService {
             posted_at: req.body.posted_at || undefined,
             image_desc: req.body.image_desc || undefined,
             is_recommendation: req.body.is_recommendation,
-            is_trending: req.body.is_trending         
+            is_trending: req.body.is_trending,
+            origin_author_name: req.body.origin_author_name || undefined
           },
           {
             where: { id: req.body.news_id },
@@ -70,7 +71,8 @@ export class NewsService {
             author_id: req.body.author_id || undefined,
             image_desc: req.body.image_desc || undefined,
             is_recommendation: req.body.is_recommendation,
-            is_trending: req.body.is_trending
+            is_trending: req.body.is_trending,
+            origin_author_name: req.body.origin_author_name || undefined
           },
           {
             transaction,
