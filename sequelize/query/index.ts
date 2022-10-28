@@ -6,6 +6,9 @@ import { newsLikeQuery } from './NewsLikeQuery';
 import { newsQuery } from './NewsQuery';
 import { newsViewLogQuery } from './NewsViewLogQuery';
 import { imageQuery } from './ImageQuery';
+import { originAuthorQuery } from './OriginAuthorQuery';
+import { tagQuery } from './TagQuery';
+import { tagMappingQuery } from './TagMappingQuery';
 
 export {
   userQuery,
@@ -15,5 +18,8 @@ export {
   newsLikeQuery,
   newsQuery,
   newsViewLogQuery,
-  imageQuery
+  imageQuery,
+  originAuthorQuery,
+  tagQuery,
+  tagMappingQuery
 };

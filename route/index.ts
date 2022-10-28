@@ -6,6 +6,8 @@ import {isLoggedIn} from '../midleware/middleware';
 
 // Controller
 import { categoryController } from '../controller/CategoryController';
+import { originAuthorController } from '../controller/OriginAuthorController';
+import { tagController } from '../controller/TagController';
 
 // health check endpoint
 router.get(['/health', '/'], (req: Request, res: Response) => {
@@ -26,6 +28,15 @@ router.get('/token/check', isLoggedIn, (req: Request, res: Response) => {
 router.get('/category/get/all', categoryController.getCategory);
 
 router.get('/sync/db', categoryController.syncDatabase);
+
+router.get('/origin-author', originAuthorController.getOriginAuthor);
+router.post('/origin-author/upsert', originAuthorController.upsertOriginAuthor);
+
+router.get('/tag', tagController.getTagList);
+router.post('/tag/upsert', tagController.upsertTag);
+
+router.get('/tag-mapping/:news_id', tagController.getTagMappingList);
+router.post('/tag-mapping/upsert', tagController.upsertTagMapping);
 
 // Return 404 to all unidentified path URLs
 router.get('*', function (req: Request, res: Response) {

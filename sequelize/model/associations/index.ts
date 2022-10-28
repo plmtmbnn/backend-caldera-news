@@ -5,6 +5,8 @@ import {
   NewsLikeModel,
   NewsModel,
   UserModel,
+  TagModel,
+  TagMappingModel
 } from "../index";
 
 UserModel.hasOne(AuthorModel, { foreignKey: "user_id" });
@@ -27,3 +29,9 @@ NewsLikeModel.belongsTo(NewsModel, { foreignKey: "news_id" });
 
 NewsModel.hasOne(NewsCommentModel, { foreignKey: "news_id" });
 NewsCommentModel.belongsTo(NewsModel, { foreignKey: "news_id" });
+
+NewsModel.hasOne(TagMappingModel, { foreignKey: "news_id" });
+TagMappingModel.belongsTo(NewsModel, { foreignKey: "news_id" });
+
+TagModel.hasMany(TagMappingModel, { foreignKey: "tag_id" });
+TagMappingModel.belongsTo(TagModel, { foreignKey: "tag_id" });

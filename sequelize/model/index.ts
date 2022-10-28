@@ -6,6 +6,9 @@ import { NewsModel } from './NewsModel';
 import { NewsCategoryModel } from './NewsCategoryModel';
 import { NewsViewLogModel } from './NewsViewLogModel';
 import { ImageModel } from './ImageModel';
+import {OriginAuthorModel} from './OriginAuthorModel';
+import {TagModel} from './TagModel';
+import {TagMappingModel} from './TagMappingModel';
 
 export {
   UserModel,
@@ -15,5 +18,8 @@ export {
   NewsModel,
   NewsCategoryModel,
   NewsViewLogModel,
-  ImageModel
+  ImageModel,
+  OriginAuthorModel,
+  TagModel,
+  TagMappingModel
 };

@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { EXCEPTION_MESSAGE } from "../helper/EXCEPTION_MESSAGE";
 import { CustomException } from "../helper/CustomException";
 
-import { newsQuery, newsCommentQuery, newsLikeQuery, newsViewLogQuery, imageQuery } from "../sequelize/query";
+import { newsQuery, newsCommentQuery, newsLikeQuery, newsViewLogQuery, imageQuery, tagMappingQuery } from "../sequelize/query";
 import { sequelize } from "../sequelize/init";
 import { Op, col, fn, where, literal } from "sequelize";
 
@@ -58,8 +58,35 @@ export class NewsService {
             transaction,
           }
         );
+
+        const tag_ids = JSON.parse(req.body.tag_ids);
+
+        if(tag_ids?.length && Array(...tag_ids).length > 0) {
+        await tagMappingQuery.destroy(
+          {
+            where: { news_id: req.body.news_id },
+            transaction
+          });
+          let insertTag: any[] = [];
+          for (const iterator of Array(...tag_ids)) {
+            insertTag.push(
+               tagMappingQuery.insert(
+                {
+                  news_id: req.body.news_id,
+                  tag_id: iterator
+                },
+                {
+                  transaction
+                }
+              )
+            );
+          }
+  
+          insertTag = await Promise.all(insertTag);
+        }
+        
       } else {
-        await newsQuery.insert(
+        const news: any = await newsQuery.insert(
           {
             news_url,
             title: req.body.title,
@@ -78,6 +105,33 @@ export class NewsService {
             transaction,
           }
         );
+
+        const tag_ids = JSON.parse(req.body.tag_ids);
+
+        if(tag_ids?.length && Array(...tag_ids).length > 0) {
+          await tagMappingQuery.destroy(
+            {
+              where: { news_id: news.id },
+              transaction
+            });
+            let insertTag: any[] = [];
+            for (const iterator of Array(...tag_ids)) {
+              insertTag.push(
+                 tagMappingQuery.insert(
+                  {
+                    news_id: news.id,
+                    tag_id: iterator
+                  },
+                  {
+                    transaction
+                  }
+                )
+              );
+            }
+    
+            insertTag = await Promise.all(insertTag);
+        }
+        
       }
       await transaction.commit();
     } catch (error) {
@@ -108,7 +162,12 @@ export class NewsService {
       order: [["created_at", "DESC"]],
     });
     
-    await sequelize.transaction(async (transaction: any) => {
+    const tags: any = await tagMappingQuery.findAndCountAll({
+      where: { news_id: result.rows[0].id },
+      order: [["tag_id", "ASC"]],
+    });
+
+    sequelize.transaction(async (transaction: any) => {
         await newsViewLogQuery.insert({
           news_id: result.rows[0].id
         }, {transaction});
@@ -118,7 +177,8 @@ export class NewsService {
       data: {
         news: result.rows[0],
         likes: likes.count,
-        comments: comments.count
+        comments: comments.count,
+        tags: tags.rows
       },
     };
   }
@@ -144,11 +204,17 @@ export class NewsService {
       order: [["created_at", "DESC"]],
     });
     
+    const tags: any = await tagMappingQuery.findAndCountAll({
+      where: { news_id: result.rows[0].id },
+      order: [["tag_id", "ASC"]],
+    });
+
     return {
       data: {
         news: result.rows[0],
         likes: likes.count,
-        comments: comments.count
+        comments: comments.count,
+        tags: tags.rows
       },
     };
   }

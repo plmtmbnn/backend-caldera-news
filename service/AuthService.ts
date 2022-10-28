@@ -102,6 +102,7 @@ export class AuthService {
         await transaction.commit();
         return ResponseHandler.send(res, {});
       } else {
+        await transaction.commit();
         return ResponseHandler.send(res, new CustomException(EXCEPTION_MESSAGE.EMAIL_ALREADY_USED), true);
       }
     } catch (error) {
@@ -112,8 +113,6 @@ export class AuthService {
   }
 
   static async listUser(req: Request, res: Response): Promise<any> {
-    const transaction = await sequelize.transaction();
-
     try {
         let where: any = {};
         if(req.body.email){
@@ -159,7 +158,6 @@ export class AuthService {
           });
           ;
     } catch (error) {
-      await transaction.rollback();
       console.log('[AuthService][listUser]', error);
       return ResponseHandler.send(res, error, true);
     }
