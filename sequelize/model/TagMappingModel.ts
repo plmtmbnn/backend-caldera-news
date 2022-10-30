@@ -10,11 +10,11 @@ export const TagMappingModel = sequelize.define('t_tag_mapping', {
   },
   news_id: {
     type: DataTypes.UUID,
-    allowNull: true
+    allowNull: false
   },
   tag_id: {
     type: DataTypes.INTEGER,
-    allowNull: true
+    allowNull: false
   }
 }, {
   underscored: true,

@@ -119,6 +119,8 @@ export class NewsService {
             });
             let insertTag: any[] = [];
             for (const iterator of Array(...tag_ids)) {
+              console.log('iterator', iterator);
+              
               insertTag.push(
                  tagMappingQuery.insert(
                   {
