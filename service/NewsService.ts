@@ -108,9 +108,6 @@ export class NewsService {
 
         const tag_ids = JSON.parse(req.body.tag_ids);
 
-        console.log('req.body.tag_ids', req.body.tag_ids);
-        console.log(tag_ids);
-        
         if(tag_ids?.length && Array(...tag_ids).length > 0) {
           await tagMappingQuery.destroy(
             {
@@ -119,8 +116,6 @@ export class NewsService {
             });
             let insertTag: any[] = [];
             for (const iterator of tag_ids) {
-              console.log('iterator', iterator);
-              
               insertTag.push(
                  tagMappingQuery.insert(
                   {
