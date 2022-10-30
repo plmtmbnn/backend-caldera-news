@@ -36,7 +36,7 @@ export class NewsController {
                 Joi.string().regex(/image/)
               )
             }).options({ allowUnknown: true }).optional(),
-            tag_ids: Joi.string().optional(),
+            tag_ids: Joi.any().optional(),
           });
 
           req.body = { ...body, ...files };
