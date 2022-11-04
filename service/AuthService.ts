@@ -34,6 +34,7 @@ export class AuthService {
         if (result.count === 0) {
           return ResponseHandler.send(res, new CustomException(EXCEPTION_MESSAGE.USER_NOT_REGISTERED_YET), true);
         }
+        console.log(decrypt(result.rows[0].password));
         
         if(req.body.password !== decrypt(result.rows[0].password)) {
           return ResponseHandler.send(res, new CustomException(EXCEPTION_MESSAGE.INVALID_EMAIL_OR_PASSWORD), true);
@@ -245,6 +246,40 @@ export class AuthService {
     } catch (error) {
       await transaction.rollback();
       console.log('[AuthService][addAsAdmin]', error);
+      return ResponseHandler.send(res, error, true);
+    }
+  }
+
+  static async updatePassword(req: Request, res: Response): Promise<any> {
+    const transaction = await sequelize.transaction();
+    try {
+        let queryPayload: queryPayload = {
+          where: {
+            id: req.body.user_id
+          }
+        };
+
+        let result: any = await userQuery.findAndCountAll(queryPayload);
+
+        if (result.count === 0) {
+          await transaction.rollback();
+          return ResponseHandler.send(res, new CustomException(EXCEPTION_MESSAGE.USER_NOT_REGISTERED_YET), true);
+        }
+
+        await userQuery.update(
+          {
+            password: encrypt(req.body.password)
+          },
+          {
+          transaction,
+          where: {id: req.body.user_id}
+        })
+        await transaction.commit();
+        return ResponseHandler.send(res, {});
+          
+    } catch (error) {
+      await transaction.rollback();
+      console.log('[AuthService][login]', error);
       return ResponseHandler.send(res, error, true);
     }
   }

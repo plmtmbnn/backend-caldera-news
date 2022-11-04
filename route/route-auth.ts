@@ -9,6 +9,7 @@ import { authController } from '../controller/AuthController';
 
 router.post('/login', authController.login);
 router.post('/register', authController.register);
+router.post('/password/update', authController.updatePassword);
 
 router.post('/user/list', isLoggedIn, authController.listUser);
 router.post('/user/update', isLoggedIn, authController.updateUserStatus);
