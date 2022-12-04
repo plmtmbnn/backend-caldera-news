@@ -36,7 +36,7 @@ export class NewsService {
 
       let news_url: string = `${moment().format(
         "YYMMDD-HH-mm-ss"
-      )}_${generateNewsUrl(req.body.title || "Tidak Ada Judul")}`;
+      )}_${generateNewsUrl(req.body.title || "Tidak Ada Judul Berita")}`;
 
       if (req.body.news_id && checkNews && checkNews.count > 0) {
         await newsQuery.update(
@@ -106,9 +106,12 @@ export class NewsService {
           }
         );
 
-        const tag_ids = JSON.parse(req.body.tag_ids);
+        let tag_ids: any[] = [];
+        if(req.body.tag_ids){
+          tag_ids = JSON.parse(req.body.tag_ids);
+        }
 
-        if(tag_ids?.length && Array(...tag_ids).length > 0) {
+        if(tag_ids.length > 0) {
           await tagMappingQuery.destroy(
             {
               where: { news_id: news.id },
@@ -136,7 +139,7 @@ export class NewsService {
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();
-      console.log("[NewsService][upsertNews]", error);
+      console.log("[NewsService][upsertNews]", JSON.stringify(req.body), error);
       throw new CustomException(EXCEPTION_MESSAGE.SYSTEM_ERROR);
     }
   }
