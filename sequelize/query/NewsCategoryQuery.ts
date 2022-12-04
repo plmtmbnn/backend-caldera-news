@@ -1,4 +1,4 @@
-import { NewsCategoryModel, AuthorModel,  NewsCommentModel, NewsLikeModel, NewsModel, UserModel } from '../model/index';
+import { NewsCategoryModel, AuthorModel,  NewsCommentModel, NewsLikeModel, NewsModel, UserModel, ImageModel, NewsViewLogModel, OriginAuthorModel, TagMappingModel, TagModel } from '../model/index';
 // require('../model/associations/index');
 
 import { queryPayload } from '../../helper/QueryPayload';
@@ -22,12 +22,17 @@ class NewsCategoryQuery {
   }
 
   async syncAllTable() {
-    await UserModel.sync();
-    await NewsCategoryModel.sync();
-    await AuthorModel.sync();
-    await NewsModel.sync(); 
-    await NewsCommentModel.sync(); 
-    await NewsLikeModel.sync(); 
+    // await UserModel.sync();
+    // await NewsCategoryModel.sync();
+    // await AuthorModel.sync();
+    await OriginAuthorModel.sync({force: true}); 
+    await TagModel.sync({force: true});
+    await NewsModel.sync({force: true}); 
+    await ImageModel.sync({force: true}); 
+    await NewsCommentModel.sync({force: true}); 
+    await NewsLikeModel.sync({force: true}); 
+    await TagMappingModel.sync({force: true}); 
+    await NewsViewLogModel.sync({force: true}); 
   }
 }
 
