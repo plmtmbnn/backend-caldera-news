@@ -5,8 +5,7 @@ export const OriginAuthorModel = sequelize.define('t_origin_author', {
   id: {
     type: DataTypes.UUID,
     allowNull: false,
-    primaryKey: true,
-    autoIncrement: true
+    primaryKey: true
   },
   full_name: {
     type: DataTypes.STRING,
