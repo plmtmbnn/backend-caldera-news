@@ -23,16 +23,16 @@ class NewsCategoryQuery {
 
   async syncAllTable() {
     // await NewsCategoryModel.sync();
-    await UserModel.sync({force: true, });
-    await AuthorModel.sync({force: true});
+    // await UserModel.sync({force: true, });
+    // await AuthorModel.sync({force: true});
     await OriginAuthorModel.sync({force: true}); 
-    await TagModel.sync({force: true});
-    await NewsModel.sync({force: true}); 
-    await ImageModel.sync({force: true}); 
-    await NewsCommentModel.sync({force: true}); 
-    await NewsLikeModel.sync({force: true}); 
-    await TagMappingModel.sync({force: true}); 
-    await NewsViewLogModel.sync({force: true}); 
+    // await TagModel.sync({force: true});
+    // await NewsModel.sync({force: true}); 
+    // await ImageModel.sync({force: true}); 
+    // await NewsCommentModel.sync({force: true}); 
+    // await NewsLikeModel.sync({force: true}); 
+    // await TagMappingModel.sync({force: true}); 
+    // await NewsViewLogModel.sync({force: true}); 
   }
 }
 
