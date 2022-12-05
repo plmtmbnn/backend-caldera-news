@@ -3,7 +3,7 @@ import { DataTypes, literal } from 'sequelize';
 
 export const TagModel = sequelize.define('t_tag', {
   id: {
-    type: DataTypes.UUID,
+    type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
     autoIncrement: true
