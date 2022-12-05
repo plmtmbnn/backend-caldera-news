@@ -25,9 +25,9 @@ module.exports = {
         DB_PASS: "LgOAHmctc3vQJDxE6UFk",
         DB_PORT: 5432,
         SECRET_KEY: "s3cREt_k3Y",
-        REDIS_HOST: "redis-10006.c273.us-east-1-2.ec2.cloud.redislabs.com",
-        REDIS_PORT: 10006,
-        REDIS_CRYPT: "N1ZikVdsY0kkbCBiUjCkIhYXQDmJjcBE",
+        REDIS_HOST: 'localhost',
+        REDIS_PORT: 6379,
+        REDIS_CRYPT: 'N1ZikVdsY0kkbCBiUjCkIhYXQDmJjcBE'
       }
     }
   ]

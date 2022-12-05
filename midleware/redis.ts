@@ -1,12 +1,17 @@
 import { createClient } from 'redis';
 
-var client : any = createClient({
-  url: 'redis://default:N1ZikVdsY0kkbCBiUjCkIhYXQDmJjcBE@redis-10006.c273.us-east-1-2.ec2.cloud.redislabs.com:10006'
- });
+const REDIS_HOST: string = process.env.REDIS_HOST;
+const REDIS_PORT: string = process.env.REDIS_PORT;
+const REDIS_CRYPT: string = process.env.REDIS_CRYPT;
+
+const client : any = createClient({
+  url: `redis://:${REDIS_CRYPT}@${REDIS_HOST}:${REDIS_PORT}`
+});
 
 client.connect();
 
 client.on('error', function (err: any) {
+  console.log(`redis://:${REDIS_CRYPT}@${REDIS_HOST}:${REDIS_PORT}`);
   console.log('Redis Error:', err);
 });
 
