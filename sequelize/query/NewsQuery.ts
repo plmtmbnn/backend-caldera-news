@@ -183,6 +183,10 @@ GROUP BY
   async insert(value: any, payload: queryPayload) {
     return await NewsModel.create(value, { ...payload });
   }
+
+  async destroy(payload: queryPayload) {
+    return await NewsModel.destroy({ ...payload });
+  }
 }
 
 export const newsQuery = new NewsQuery();

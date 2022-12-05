@@ -76,6 +76,17 @@ export class NewsController {
     }
   }
 
+  
+  async deleteNews(req: Request, res: Response): Promise<void> {
+    try {
+      const result: any = await NewsService.deleteNews(req, res);
+      ResponseHandler.send(res, result);
+    } catch (error) {
+      console.log("[NewsController][deleteNews]", error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
+
   async getNewsById(req: Request, res: Response): Promise<void> {
     try {
       const result: any = await NewsService.getNewsById(req, res);

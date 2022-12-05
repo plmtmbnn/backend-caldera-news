@@ -144,6 +144,33 @@ export class NewsService {
     }
   }
 
+  static async deleteNews(req: Request, res: Response): Promise<any> {
+    const transaction = await sequelize.transaction();
+    try {
+    
+      if (req.params.news_id) {
+        await tagMappingQuery.destroy(
+          {
+            where: { news_id: req.params.news_id },
+            transaction
+          });
+
+        await newsQuery.destroy(
+          {
+            where: { id: req.params.news_id },
+            transaction,
+          }
+        );
+      }
+      await transaction.commit();
+    } catch (error) {
+      await transaction.rollback();
+      console.log("[NewsService][deleteNews]", JSON.stringify(req.body), error);
+      throw new CustomException(EXCEPTION_MESSAGE.SYSTEM_ERROR);
+    }
+  }
+
+
   static async getNews(req: Request, res: Response): Promise<any> {
     let queryPayload: queryPayload = {
       where: {
