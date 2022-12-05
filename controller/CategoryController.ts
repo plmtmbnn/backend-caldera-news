@@ -17,6 +17,7 @@ export class CategoryController {
       const result: any = await CategoryService.syncDatabase(req, res);
       ResponseHandler.send(res, result);
     } catch (error) {
+      console.log(error);
       ResponseHandler.send(res, error, true);
     }
   }

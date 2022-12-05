@@ -23,7 +23,7 @@ class NewsCategoryQuery {
 
   async syncAllTable() {
     // await NewsCategoryModel.sync();
-    await UserModel.sync({force: true});
+    await UserModel.sync({force: true, });
     await AuthorModel.sync({force: true});
     await OriginAuthorModel.sync({force: true}); 
     await TagModel.sync({force: true});

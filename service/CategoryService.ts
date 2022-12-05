@@ -9,6 +9,7 @@ import {
 
 import { queryPayload } from 'helper/QueryPayload';
 
+
 export class CategoryService {
   static async getCategoryList(req: Request, res: Response): Promise<any> {
     let queryPayload: queryPayload = {
