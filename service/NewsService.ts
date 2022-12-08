@@ -12,6 +12,7 @@ import { queryPayload } from "../helper/QueryPayload";
 import { FileHelper } from "../helper/FileHelper";
 import { generateNewsUrl } from "../helper/StringManipulation";
 import moment from "moment";
+import fs from 'fs';
 
 export class NewsService {
   static async upsertNews(req: Request, res: Response): Promise<any> {
@@ -203,6 +204,8 @@ export class NewsService {
         }, {transaction});
     });
 
+    this.storeMetaTag(req.params.news_url, result.rows[0]);
+    
     return {
       data: {
         news: result.rows[0],
@@ -213,6 +216,19 @@ export class NewsService {
     };
   }
 
+  static storeMetaTag(file_name: string, data: any){
+    try {
+      const json: string = JSON.stringify(
+        {
+          title: data.title,
+          image_url: data.image_url
+        }
+        );
+      fs.writeFileSync(`../../metatag/${file_name}.json`, json, 'utf8');
+    } catch (error) {
+      
+    }
+  }
   static async getNewsById(req: Request, res: Response): Promise<any> {
     let queryPayload: queryPayload = {
       where: {
