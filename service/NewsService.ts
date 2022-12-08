@@ -205,7 +205,7 @@ export class NewsService {
     });
 
     this.storeMetaTag(req.params.news_url, result.rows[0]);
-    
+
     return {
       data: {
         news: result.rows[0],
@@ -221,7 +221,7 @@ export class NewsService {
       const json: string = JSON.stringify(
         {
           title: data.title,
-          image_url: data.image_url
+          image_url: `https://api.caldera.id/news/image/news/${data.image_url}`
         }
         );
       fs.writeFileSync(`../../metatag/${file_name}.json`, json, 'utf8');
