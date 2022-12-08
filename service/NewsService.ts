@@ -224,9 +224,9 @@ export class NewsService {
           image_url: `https://api.caldera.id/news/image/news/${data.image_url}`
         }
         );
-      fs.writeFileSync(`../../metatag/${file_name}.json`, json, 'utf8');
+      fs.writeFileSync(`${__dirname}../../metatag/${file_name}.json`, json, 'utf8');
     } catch (error) {
-      console.log('storeMetaTag error', error);
+      console.log('storeMetaTag error', __dirname, error);
       
     }
   }
