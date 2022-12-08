@@ -29,6 +29,9 @@ router.get('/category/get/all', categoryController.getCategory);
 
 router.get('/sync/db', categoryController.syncDatabase);
 
+router.get('/meta/title/:news_url', categoryController.getMetaTagTitle);
+router.get('/meta/image/:news_url', categoryController.getMetaTagImage);
+
 router.get('/origin-author', originAuthorController.getOriginAuthor);
 router.post('/origin-author/upsert', originAuthorController.upsertOriginAuthor);
 
