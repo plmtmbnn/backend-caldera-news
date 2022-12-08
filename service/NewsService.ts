@@ -226,6 +226,7 @@ export class NewsService {
         );
       fs.writeFileSync(`../../metatag/${file_name}.json`, json, 'utf8');
     } catch (error) {
+      console.log('storeMetaTag error', error);
       
     }
   }
