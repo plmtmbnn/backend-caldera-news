@@ -13,6 +13,7 @@ import { FileHelper } from "../helper/FileHelper";
 import { generateNewsUrl } from "../helper/StringManipulation";
 import moment from "moment";
 import fs from 'fs';
+import path from 'path';
 
 export class NewsService {
   static async upsertNews(req: Request, res: Response): Promise<any> {
@@ -204,7 +205,10 @@ export class NewsService {
         }, {transaction});
     });
 
-    this.storeMetaTag(req.params.news_url, result.rows[0]);
+    const file_name: string = path.join(
+      __dirname, '..', '..', '/metatag', `${req.params.news_url}.json`);
+
+    this.storeMetaTag(file_name, result.rows[0]);
 
     return {
       data: {
@@ -224,9 +228,10 @@ export class NewsService {
           image_url: `https://api.caldera.id/news/image/news/${data.image_url}`
         }
         );
-      fs.writeFileSync(`${__dirname}../../metatag/${file_name}.json`, json, 'utf8');
+
+      fs.writeFileSync(file_name, json, 'utf8');
     } catch (error) {
-      console.log('storeMetaTag error', __dirname, error);
+      console.log('storeMetaTag error', file_name, error);
       
     }
   }
