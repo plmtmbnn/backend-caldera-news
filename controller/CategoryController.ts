@@ -34,7 +34,8 @@ export class CategoryController {
       res.end();
     } catch (error) {
       console.log(error);
-      ResponseHandler.send(res, error, true);
+      res.write('caldera.id');
+      res.end();
     }
   }
 
@@ -49,7 +50,8 @@ export class CategoryController {
       res.end();
     } catch (error) {
       console.log(error);
-      ResponseHandler.send(res, error, true);
+      res.write('https://www.caldera.id/static/media/logo.f22abae4ca373ed8a7b7.png');
+      res.end();
     }
   }
 }
