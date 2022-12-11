@@ -8,6 +8,9 @@ import cors from 'cors';
 import express from 'express';
 
 import fs from 'fs';
+import path from 'path';
+
+import { Request, Response } from 'express';
 
 class App {
   app: any;
@@ -23,11 +26,20 @@ class App {
       this.app.use(express.json({ limit: '100mb' }));
       this.app.use(express.urlencoded({ extended: true, limit: '100mb' }));
 
+      this.app.use(express.static(path.join(__dirname, "build")));
+
       this.app.use('/auth', authRoute);
       this.app.use('/news', newsRoute);
       this.app.use('/category', categoryRoute);
       
       this.app.use('/', router);
+
+      this.app.get("*", (req: Request, res: Response) => {
+        console.log('Trying to request', req);
+        
+        res.sendFile(path.join(__dirname, '..', '..', '/frontend', "index.html"))
+        }
+      );
 
       var avatarDir = './image/avatar';
       var newsDir = './image/news';

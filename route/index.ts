@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import express from 'express';
 const router = express.Router();
 
@@ -31,6 +31,7 @@ router.get('/sync/db', categoryController.syncDatabase);
 
 router.get('/meta/title/:news_url', categoryController.getMetaTagTitle);
 router.get('/meta/image/:news_url', categoryController.getMetaTagImage);
+router.get('/meta/share-link/:news_url', categoryController.getMetaTagShareLink);
 
 router.get('/origin-author', originAuthorController.getOriginAuthor);
 router.post('/origin-author/upsert', originAuthorController.upsertOriginAuthor);
@@ -41,10 +42,7 @@ router.post('/tag/upsert', tagController.upsertTag);
 router.get('/tag-mapping/:news_id', tagController.getTagMappingList);
 router.post('/tag-mapping/upsert', tagController.upsertTagMapping);
 
-// Return 404 to all unidentified path URLs
-router.get('*', function (req: Request, res: Response) {
-  res.status(404).json();
-});
+
 router.post('*', function (req: Request, res: Response) {
   res.status(404).json();
 });

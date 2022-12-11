@@ -56,6 +56,22 @@ export class CategoryController {
       res.end();
     }
   }
+
+  async getMetaTagShareLink (req: Request, res: Response): Promise<void> {
+    try {
+      const file_name: string = path.join(
+        __dirname, '..', '..', '/metatag', `${req.params.news_url}.json`);
+
+      const metatag = require(`${file_name}`);
+      const message: string = metatag?.image_url || 'https://www.caldera.id/static/media/logo.f22abae4ca373ed8a7b7.png' ;
+      res.write(message);
+      res.end();
+    } catch (error) {
+      console.log(error);
+      res.write('https://www.caldera.id/static/media/logo.f22abae4ca373ed8a7b7.png');
+      res.end();
+    }
+  }
 }
 
 export const categoryController = new CategoryController();
