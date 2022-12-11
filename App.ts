@@ -37,7 +37,7 @@ class App {
         console.log('Trying to request: article => ', req.params.news_url, pathToIndex);
         const raw: any = fs.readFileSync(pathToIndex);
         const pageTitle = "Homepage - Welcome to my page"
-        const updated = raw.replace("__PAGE_META__", `<title>${pageTitle}</title>`)
+        const updated = String(raw).replace("__PAGE_META__", `<title>${pageTitle}</title>`)
       
         res.send(updated);
         }
