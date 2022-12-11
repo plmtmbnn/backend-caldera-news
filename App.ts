@@ -32,10 +32,9 @@ class App {
       
       this.app.use('/', router);
 
-      this.app.get("/article/:news_url", (req: Request, res: Response) => {
-        console.log('Trying to request: article => ', req.params);
-        
+      this.app.get("/article/:news_url", (req: Request, res: Response) => {        
         const pathToIndex = path.join(__dirname, '..', '..', '/frontend', "index.html");
+        console.log('Trying to request: article => ', req.params.news_url, pathToIndex);
         const raw: any = fs.readFileSync(pathToIndex);
         const pageTitle = "Homepage - Welcome to my page"
         const updated = raw.replace("__PAGE_META__", `<title>${pageTitle}</title>`)
