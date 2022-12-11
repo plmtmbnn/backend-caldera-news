@@ -28,18 +28,18 @@ class App {
 
       this.app.use(express.static(path.join(__dirname, '..', '..', '/frontend')));
 
+      this.app.use('/auth', authRoute);
+      this.app.use('/news', newsRoute);
+      this.app.use('/category', categoryRoute);
+      
+      this.app.use('/', router);
+
       this.app.get("*", (req: Request, res: Response) => {
         console.log('Trying to request', req);
         
         res.sendFile(path.join(__dirname, '..', '..', '/frontend', "index.html"))
         }
       );
-
-      this.app.use('/auth', authRoute);
-      this.app.use('/news', newsRoute);
-      this.app.use('/category', categoryRoute);
-      
-      this.app.use('/', router);
 
       var avatarDir = './image/avatar';
       var newsDir = './image/news';

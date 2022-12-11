@@ -42,9 +42,4 @@ router.post('/tag/upsert', tagController.upsertTag);
 router.get('/tag-mapping/:news_id', tagController.getTagMappingList);
 router.post('/tag-mapping/upsert', tagController.upsertTagMapping);
 
-
-router.post('*', function (req: Request, res: Response) {
-  res.status(404).json();
-});
-
 export default router;
