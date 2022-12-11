@@ -26,18 +26,28 @@ class App {
       this.app.use(express.json({ limit: '100mb' }));
       this.app.use(express.urlencoded({ extended: true, limit: '100mb' }));
 
-      this.app.use(express.static(path.join(__dirname, '..', '..', '/frontend')));
-
       this.app.use('/auth', authRoute);
       this.app.use('/news', newsRoute);
       this.app.use('/category', categoryRoute);
       
       this.app.use('/', router);
 
-      this.app.get("*", (req: Request, res: Response) => {
-        console.log('Trying to request', req);
+      this.app.get("/article/:news_url", (req: Request, res: Response) => {
+        console.log('Trying to request: article => ', req.params);
         
-        res.sendFile(path.join(__dirname, '..', '..', '/frontend', "index.html"))
+        const pathToIndex = path.join(__dirname, '..', '..', '/frontend', "index.html");
+        const raw: any = fs.readFileSync(pathToIndex);
+        const pageTitle = "Homepage - Welcome to my page"
+        const updated = raw.replace("__PAGE_META__", `<title>${pageTitle}</title>`)
+      
+        res.send(updated);
+        }
+      );
+
+      this.app.use(express.static(path.join(__dirname, '..', '..', '/frontend')));
+
+      this.app.get("*", (req: Request, res: Response) => {        
+        res.status(404).json({status: 'NOT_FOUND'});
         }
       );
 
