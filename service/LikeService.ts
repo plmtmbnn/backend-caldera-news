@@ -63,8 +63,6 @@ export class LikeService {
         current_path = path.join(__dirname, '..', '..', 'image',`${path_name}/${file_name}`);
       }
 
-      console.log(current_path);
-      
       const binary = fs.readFileSync(current_path);
       res.writeHead(200, { 'Content-Type': 'image/jpeg' });
       res.end(binary, 'binary');
