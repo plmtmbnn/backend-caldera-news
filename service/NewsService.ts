@@ -305,7 +305,6 @@ export class NewsService {
         default:
           break;
       }
-      where.is_trending = req.body.is_trending
     };
 
 
