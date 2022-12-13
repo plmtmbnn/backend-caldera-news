@@ -84,7 +84,7 @@ class NewsQuery {
     additionalQuery = `${additionalQuery} AND is_trending = ${payload.where.is_trending} `
   }
 
-  additionalQuery = `${additionalQuery} ORDER BY t1.created_at ASC `;
+  additionalQuery = `${additionalQuery} ORDER BY t1.created_at DESC `;
 
   if(payload.limit){ 
     additionalQuery = `${additionalQuery} LIMIT ${payload.limit} `;
@@ -117,6 +117,7 @@ FROM
                   "category_id",
                   "posted_at",
                   t1."updated_at",
+                  t1."created_at",
                   "is_recommendation",
                   "is_trending",
                   "total_visit",
@@ -141,6 +142,7 @@ FROM
           category_id,
           posted_at,
           updated_at,
+          created_at,
           is_recommendation,
           is_trending,
           total_visit,
@@ -160,6 +162,7 @@ GROUP BY
   "category_id",
   "posted_at",
   c."updated_at",
+  created_at
   "is_recommendation",
   "is_trending",
   "total_visit",
@@ -168,6 +171,7 @@ GROUP BY
   c.total_likes,
   total_data
   ${additionalQueryLimitOffset}
+  ORDER BY created_at DESC
   `;
   
   return await sequelize.query(
