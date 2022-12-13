@@ -171,7 +171,7 @@ GROUP BY
   c.total_likes,
   total_data
   ${additionalQueryLimitOffset}
-  ORDER BY created_at DESC
+  ORDER BY c.created_at DESC
   `;
   
   return await sequelize.query(
