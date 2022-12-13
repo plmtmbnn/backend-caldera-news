@@ -68,27 +68,26 @@ export class NewsService {
           console.log('tag_ids, tag_ids', tag_ids);
           
 
-          if(req.body.tag_ids?.length && req.body.tag_ids.length > 0) {
+          if(tag_ids?.length && tag_ids.length > 0) {
           await tagMappingQuery.destroy(
             {
               where: { news_id: req.body.news_id },
               transaction
             });
             let insertTag: any[] = [];
-            for (const iterator of Array(...req.body.tag_ids)) {
-              console.log('iterator', iterator);
-              
+
+            for (let index = 0; index < tag_ids.length; index++) {
               insertTag.push(
-                 tagMappingQuery.insert(
-                  {
-                    news_id: req.body.news_id,
-                    tag_id: iterator
-                  },
-                  {
-                    transaction
-                  }
-                )
-              );
+                tagMappingQuery.insert(
+                 {
+                   news_id: req.body.news_id,
+                   tag_id: tag_ids[index]
+                 },
+                 {
+                   transaction
+                 }
+               )
+             );
             }
     
             insertTag = await Promise.all(insertTag);
@@ -120,25 +119,26 @@ export class NewsService {
           tag_ids = JSON.parse(req.body.tag_ids);
         }
 
-        if(req.body.tag_ids.length > 0) {
+        if(tag_ids.length > 0) {
           await tagMappingQuery.destroy(
             {
               where: { news_id: news.id },
               transaction
             });
             let insertTag: any[] = [];
-            for (const iterator of req.body.tag_ids) {
+
+            for (let index = 0; index < tag_ids.length; index++) {
               insertTag.push(
-                 tagMappingQuery.insert(
-                  {
-                    news_id: news.id,
-                    tag_id: iterator
-                  },
-                  {
-                    transaction
-                  }
-                )
-              );
+                tagMappingQuery.insert(
+                 {
+                  news_id: news.id,
+                   tag_id: tag_ids[index]
+                 },
+                 {
+                   transaction
+                 }
+               )
+             );
             }
     
             insertTag = await Promise.all(insertTag);
