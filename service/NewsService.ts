@@ -292,7 +292,22 @@ export class NewsService {
     if(req.body.author_id){ where.author_id = req.body.author_id}
     if(req.body.status !== undefined){ where.status = req.body.status}
     if(req.body.is_recommendation !== undefined){ where.is_recommendation = req.body.is_recommendation}
-    if(req.body.is_trending !== undefined){ where.is_trending = req.body.is_trending}
+    if(req.body.is_trending !== undefined){ where.is_trending = req.body.is_trending};
+
+    if(req.body.newsType !== undefined){ 
+      switch (req.body.newsType) {
+        case 'TRENDING':
+          where.is_trending = true;
+          break;
+          case 'REKOMENDASI':
+            where.is_recommendation = true;
+          break;      
+        default:
+          break;
+      }
+      where.is_trending = req.body.is_trending
+    };
+
 
     const limit: number = req.body.limit || undefined;
     const offset: number =  req.body.offset || undefined;

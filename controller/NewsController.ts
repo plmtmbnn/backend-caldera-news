@@ -109,6 +109,7 @@ export class NewsController {
         offset: Joi.number().allow(null).optional(),
         is_recommendation: Joi.boolean().allow(null).optional(),
         is_trending: Joi.boolean().allow(null).optional(),
+        newsType: Joi.string().allow("", null).optional(),
       });
 
       const validationResult: any = schema.validate(req.body);
