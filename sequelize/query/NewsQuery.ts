@@ -60,7 +60,10 @@ class NewsQuery {
     return await NewsModel.findAll(options);
   }
 
-  async getNewsDetailRaw(payload: queryPayload) {  
+  async getNewsDetailRaw(payload: queryPayload) {
+  
+  console.log(payload.where);
+    
   let additionalQuery: string = ``;
   let additionalQueryLimitOffset: string = ``;
 

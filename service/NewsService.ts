@@ -294,13 +294,13 @@ export class NewsService {
     if(req.body.is_recommendation !== undefined){ where.is_recommendation = req.body.is_recommendation}
     if(req.body.is_trending !== undefined){ where.is_trending = req.body.is_trending};
 
-    if(req.body.newsType !== undefined){ 
+    if(req.body.newsType){ 
       switch (req.body.newsType) {
         case 'TRENDING':
           where.is_trending = true;
           break;
-          case 'REKOMENDASI':
-            where.is_recommendation = true;
+        case 'REKOMENDASI':
+          where.is_recommendation = true;
           break;      
         default:
           break;
