@@ -61,32 +61,35 @@ export class NewsService {
           }
         );
 
-        const tag_ids = JSON.parse(req.body.tag_ids);
+        console.log(req.body.tag_ids);
 
-        if(tag_ids?.length && Array(...tag_ids).length > 0) {
-        await tagMappingQuery.destroy(
-          {
-            where: { news_id: req.body.news_id },
-            transaction
-          });
-          let insertTag: any[] = [];
-          for (const iterator of Array(...tag_ids)) {
-            insertTag.push(
-               tagMappingQuery.insert(
-                {
-                  news_id: req.body.news_id,
-                  tag_id: iterator
-                },
-                {
-                  transaction
-                }
-              )
-            );
+        if(req.body.tag_ids) {
+          const tag_ids = JSON.parse(req.body.tag_ids);
+
+          if(tag_ids?.length && Array(...tag_ids).length > 0) {
+          await tagMappingQuery.destroy(
+            {
+              where: { news_id: req.body.news_id },
+              transaction
+            });
+            let insertTag: any[] = [];
+            for (const iterator of Array(...tag_ids)) {
+              insertTag.push(
+                 tagMappingQuery.insert(
+                  {
+                    news_id: req.body.news_id,
+                    tag_id: iterator
+                  },
+                  {
+                    transaction
+                  }
+                )
+              );
+            }
+    
+            insertTag = await Promise.all(insertTag);
           }
-  
-          insertTag = await Promise.all(insertTag);
         }
-        
       } else {
         const news: any = await newsQuery.insert(
           {
