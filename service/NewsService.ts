@@ -61,22 +61,26 @@ export class NewsService {
           }
         );
 
-        console.log(req.body.tag_ids);
-
         if(req.body.tag_ids) {
           const tag_ids = JSON.parse(req.body.tag_ids);
-          console.log('tag_ids, tag_ids', tag_ids);
           
-
-          if(tag_ids?.length && tag_ids.length > 0) {
           await tagMappingQuery.destroy(
             {
               where: { news_id: req.body.news_id },
               transaction
             });
+
+          if(tag_ids?.length && tag_ids.length > 0) {
+          
             let insertTag: any[] = [];
 
             for (let index = 0; index < tag_ids.length; index++) {
+
+              console.log({
+                news_id: req.body.news_id,
+                tag_id: tag_ids[index]
+              });
+              
               insertTag.push(
                 tagMappingQuery.insert(
                  {
@@ -119,12 +123,14 @@ export class NewsService {
           tag_ids = JSON.parse(req.body.tag_ids);
         }
 
+        await tagMappingQuery.destroy(
+          {
+            where: { news_id: news.id },
+            transaction
+          });
+
         if(tag_ids.length > 0) {
-          await tagMappingQuery.destroy(
-            {
-              where: { news_id: news.id },
-              transaction
-            });
+          
             let insertTag: any[] = [];
 
             for (let index = 0; index < tag_ids.length; index++) {
