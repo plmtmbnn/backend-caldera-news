@@ -61,8 +61,6 @@ class NewsQuery {
   }
 
   async getNewsDetailRaw(payload: queryPayload) {
-  
-  console.log(payload.where);
     
   let additionalQuery: string = ``;
   let additionalQueryLimitOffset: string = ``;
@@ -86,7 +84,7 @@ class NewsQuery {
     additionalQuery = `${additionalQuery} AND is_trending = ${payload.where.is_trending} `
   }
 
-  additionalQuery = `${additionalQuery} ORDER BY t1.created_at DESC `;
+  additionalQuery = `${additionalQuery} ORDER BY t1.created_at ASC `;
 
   if(payload.limit){ 
     additionalQuery = `${additionalQuery} LIMIT ${payload.limit} `;
@@ -126,7 +124,7 @@ FROM
                   category_name,
                   count(*) over() as total_data
               FROM
-                  "t_news" t1
+                  t_news t1
                   INNER JOIN t_author t2 ON t1.author_id = t2.id
                   INNER JOIN t_news_category t3 ON t1.category_id = t3.id
                   WHERE t1.id IS NOT NULL
