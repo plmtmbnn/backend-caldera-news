@@ -65,8 +65,10 @@ export class NewsService {
 
         if(req.body.tag_ids) {
           const tag_ids = JSON.parse(req.body.tag_ids);
+          console.log('tag_ids, tag_ids', tag_ids);
+          
 
-          if(tag_ids?.length && Array(...tag_ids).length > 0) {
+          if(req.body.tag_ids?.length && req.body.tag_ids.length > 0) {
           await tagMappingQuery.destroy(
             {
               where: { news_id: req.body.news_id },
@@ -118,14 +120,14 @@ export class NewsService {
           tag_ids = JSON.parse(req.body.tag_ids);
         }
 
-        if(tag_ids.length > 0) {
+        if(req.body.tag_ids.length > 0) {
           await tagMappingQuery.destroy(
             {
               where: { news_id: news.id },
               transaction
             });
             let insertTag: any[] = [];
-            for (const iterator of tag_ids) {
+            for (const iterator of req.body.tag_ids) {
               insertTag.push(
                  tagMappingQuery.insert(
                   {
