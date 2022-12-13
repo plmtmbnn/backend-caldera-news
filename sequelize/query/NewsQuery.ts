@@ -162,7 +162,7 @@ GROUP BY
   "category_id",
   "posted_at",
   c."updated_at",
-  created_at
+  created_at,
   "is_recommendation",
   "is_trending",
   "total_visit",
