@@ -75,7 +75,7 @@ export class NewsService {
               transaction
             });
             let insertTag: any[] = [];
-            for (const iterator of Array(...tag_ids)) {
+            for (const iterator of Array(...req.body.tag_ids)) {
               console.log('iterator', iterator);
               
               insertTag.push(
