@@ -12,7 +12,7 @@ export class FileHelper {
     };
 
     try {
-      await sharp(file.filepath)
+      await sharp(file.filepath, { failOnError : false})
         .resize({ height: 500 })
         .jpeg()
         .toFile(path + filename)
