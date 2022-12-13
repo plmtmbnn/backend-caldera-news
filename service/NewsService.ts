@@ -205,10 +205,10 @@ export class NewsService {
         }, {transaction});
     });
 
-    const file_name: string = path.join(
-      __dirname, '..', '..', '/metatag', `${req.params.news_url}.json`);
+    // const file_name: string = path.join(
+    //   __dirname, '..', '..', '/metatag', `${req.params.news_url}.json`);
 
-    this.storeMetaTag(file_name, result.rows[0]);
+    // this.storeMetaTag(file_name, result.rows[0]);
 
     return {
       data: {
