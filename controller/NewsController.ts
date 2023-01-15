@@ -274,12 +274,12 @@ export class NewsController {
     }
   }
 
-  async updateLikeCount(req: Request, res: Response): Promise<void> {
+  async updateBulkNews(req: Request, res: Response): Promise<void> {
     try {
-      const result: any = await NewsService.updateLikeCount(req, res);
+      const result: any = await NewsService.updateBulkNews(req, res);
       ResponseHandler.send(res, result);
     } catch (error) {
-      console.log("[NewsController][updateLikeCount]", error);
+      console.log("[NewsController][updateBulkNews]", error);
       ResponseHandler.send(res, error, true);
     }
   }

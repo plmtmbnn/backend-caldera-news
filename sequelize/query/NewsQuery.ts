@@ -99,6 +99,7 @@ class NewsQuery {
   const query: string = `
   SELECT
   c.*,
+  (like_count + total_likes) as total_likes
   count(d.id) as total_comment
 FROM
   (
@@ -109,6 +110,7 @@ FROM
           (
               SELECT
                   t1."id",
+                  t1.like_count,
                   "author_id",
                   "news_url",
                   "title",
@@ -149,7 +151,8 @@ FROM
           author_name,
           category_name,
           b.id,
-          total_data
+          total_data,
+          like_count
   ) c
   LEFT JOIN t_news_comment d ON d.news_id = c.id
 GROUP BY
@@ -169,7 +172,8 @@ GROUP BY
   author_name,
   category_name,
   c.total_likes,
-  total_data
+  total_data,
+  like_count
   ${additionalQueryLimitOffset}
   ORDER BY c.created_at DESC
   `;

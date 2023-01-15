@@ -370,7 +370,7 @@ export class NewsService {
     }
   }
 
-  static async updateLikeCount(req: Request, res: Response): Promise<any> {
+  static async updateBulkNews(req: Request, res: Response): Promise<any> {
     const transaction = await sequelize.transaction();
     try {
     
