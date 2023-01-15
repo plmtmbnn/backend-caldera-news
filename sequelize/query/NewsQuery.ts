@@ -99,7 +99,7 @@ class NewsQuery {
   const query: string = `
   SELECT
   c.*,
-  (like_count + total_likes) as total_likes
+  (like_count + total_likes) as total_likes,
   count(d.id) as total_comment
 FROM
   (
