@@ -397,7 +397,7 @@ export class NewsService {
                 })
             );
           }
-       
+          aysncUpdate = await Promise.all(aysncUpdate);
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();
