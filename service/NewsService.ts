@@ -384,10 +384,14 @@ export class NewsService {
         
 
           for (const iterator of result.rows) {
+            let news_url: string = `${moment().format(
+              "YYMMDD-HH-mm-ss"
+            )}_${generateNewsUrl(iterator.title || "Tidak Ada Judul Berita")}`;
             aysncUpdate.push(
               newsQuery.update(
                 {
-                  like_count: Math.floor((Math.random() * 500))
+                  like_count: Math.floor((Math.random() * 1000)),
+                  news_url
                 },
                 {
                   where: {
