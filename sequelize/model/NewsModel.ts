@@ -64,6 +64,11 @@ export const NewsModel = sequelize.define('t_news', {
     allowNull: true,
     defaultValue: 0
   },
+  like_count: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    defaultValue: 0
+  }
 }, {
   underscored: true,
   tableName: 't_news',

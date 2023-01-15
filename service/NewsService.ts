@@ -24,7 +24,7 @@ export class NewsService {
         const uploadStatus: any = await FileHelper.saveAndResizeFile(
           req.body.file,
           "./image/news/"
-        );      
+        );
         image_url = uploadStatus.status ? uploadStatus.filename : undefined;
       }
 
