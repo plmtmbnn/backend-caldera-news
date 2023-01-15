@@ -111,7 +111,8 @@ export class NewsService {
             image_desc: req.body.image_desc || undefined,
             is_recommendation: req.body.is_recommendation,
             is_trending: req.body.is_trending,
-            origin_author_name: req.body.origin_author_name || undefined
+            origin_author_name: req.body.origin_author_name || undefined,
+            like_count: Math.floor((Math.random() * 500))
           },
           {
             transaction,
@@ -185,7 +186,6 @@ export class NewsService {
     }
   }
 
-
   static async getNews(req: Request, res: Response): Promise<any> {
     let queryPayload: queryPayload = {
       where: {
@@ -226,7 +226,7 @@ export class NewsService {
     return {
       data: {
         news: result.rows[0],
-        likes: likes.count,
+        likes: parseInt(likes.count) + parseInt(result.rows[0].like_count),
         comments: comments.count,
         tags: tags.rows
       },
@@ -277,7 +277,7 @@ export class NewsService {
     return {
       data: {
         news: result.rows[0],
-        likes: likes.count,
+        likes: parseInt(likes.count) + parseInt(result.rows[0].like_count),
         comments: comments.count,
         tags: tags.rows
       },
@@ -366,6 +366,42 @@ export class NewsService {
     } catch (error) {
       await transaction.rollback();
       console.log("[NewsService][uploadImage]", error);
+      throw new CustomException(EXCEPTION_MESSAGE.SYSTEM_ERROR);
+    }
+  }
+
+  static async updateLikeCount(req: Request, res: Response): Promise<any> {
+    const transaction = await sequelize.transaction();
+    try {
+    
+        const result: any = await newsQuery.findAndCountAll(
+          {
+            where: {},
+            transaction
+          });
+
+          let aysncUpdate: any[] = [];
+        
+
+          for (const iterator of result.rows) {
+            aysncUpdate.push(
+              newsQuery.update(
+                {
+                  like_count: Math.floor((Math.random() * 500))
+                },
+                {
+                  where: {
+                    id: iterator.id
+                  },
+                  transaction
+                })
+            );
+          }
+       
+      await transaction.commit();
+    } catch (error) {
+      await transaction.rollback();
+      console.log("[NewsService][deleteNews]", JSON.stringify(req.body), error);
       throw new CustomException(EXCEPTION_MESSAGE.SYSTEM_ERROR);
     }
   }

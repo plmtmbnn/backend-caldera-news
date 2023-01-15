@@ -11,6 +11,7 @@ router.get('/show/:news_url', newsController.getNews);
 router.get('/delete/:news_id', isLoggedIn, newsController.deleteNews);
 router.get('/show/by-id/:id', newsController.getNewsById);
 router.post('/list', newsController.getNewsList);
+router.get('/update-like-count', newsController.updateLikeCount);
 
 router.get('/like/get/:news_id', newsController.getLikes);
 router.post('/like/upsert', isLoggedIn, newsController.upsertLike);

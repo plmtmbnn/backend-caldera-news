@@ -273,6 +273,16 @@ export class NewsController {
       ResponseHandler.send(res, error, true);
     }
   }
+
+  async updateLikeCount(req: Request, res: Response): Promise<void> {
+    try {
+      const result: any = await NewsService.updateLikeCount(req, res);
+      ResponseHandler.send(res, result);
+    } catch (error) {
+      console.log("[NewsController][updateLikeCount]", error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
 }
 
 export const newsController = new NewsController();
