@@ -10,6 +10,6 @@ export const makeid = (length: number) => {
 }
 
 export const generateNewsUrl = (title: string) => {
-  let result: string = (title || '').toLowerCase().replace(/ /g, '-').replace(/^a[\W_]+/g,"");
+  let result: string = (title || '').toLowerCase().replace(/ /g, '-').replace(/[^a-zA-Z0-9-]/g, '');
   return result;
 }
