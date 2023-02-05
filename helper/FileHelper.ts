@@ -4,7 +4,7 @@ import {makeid} from './StringManipulation';
 
 export class FileHelper {
   static async saveAndResizeFile(file: any, path: string): Promise<any> {
-    const filename: string = `${makeid(8)}.png`;
+    const filename: string = `${makeid(8)}.jpeg`;
 
     let result: any = {
       status: false,
