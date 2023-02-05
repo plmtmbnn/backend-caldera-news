@@ -384,22 +384,21 @@ export class NewsService {
         
 
           for (const iterator of result.rows) {
-            let news_url: string = `${moment().format(
-              "YYMMDD-HH-mm-ss"
-            )}_${generateNewsUrl(iterator.title || "Tidak Ada Judul Berita")}`;
-            aysncUpdate.push(
-              newsQuery.update(
-                {
-                  like_count: Math.floor((Math.random() * 1000)),
-                  news_url
-                },
-                {
-                  where: {
-                    id: iterator.id
+            if (iterator.image_url) {
+              let image_url = String(iterator.image_url).replace('.png', '.jpeg');
+              aysncUpdate.push(
+                newsQuery.update(
+                  {
+                    image_url
                   },
-                  transaction
-                })
-            );
+                  {
+                    where: {
+                      id: iterator.id
+                    },
+                    transaction
+                  })
+              ); 
+            }
           }
           aysncUpdate = await Promise.all(aysncUpdate);
       await transaction.commit();
