@@ -65,7 +65,7 @@ export class LikeService {
       }
 
       const binary = fs.readFileSync(current_path);
-      res.writeHead(200, { 'Content-Type': 'image/jpeg', 'Content-Encoding': 'gzip' });
+      res.writeHead(200, { 'Content-Type': 'image/jpeg', 'Content-Encoding': 'gzip', 'Vary': 'Accept-Encoding' });
       const compressedContent = zlib.gzipSync(binary);
       res.end(compressedContent);
       
