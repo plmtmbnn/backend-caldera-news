@@ -64,7 +64,7 @@ export class LikeService {
       }
 
       const binary = fs.readFileSync(current_path);
-      res.writeHead(200, { 'Content-Type': 'image/jpeg', 'Content-Encoding': 'gzip', 'Transfer-Encoding': 'chunked' });
+      res.writeHead(200, { 'Content-Type': 'image/jpeg', 'Content-Encoding': 'gzip' });
       res.end(binary, 'binary');
       
     } catch (error) {
