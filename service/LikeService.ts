@@ -12,6 +12,7 @@ import {
 } from '../sequelize/query';
 
 import { sequelize } from "../sequelize/init";
+const zlib = require('zlib');
 
 export class LikeService {
   static async upsertLike(req: Request, res: Response): Promise<any> {
@@ -64,8 +65,9 @@ export class LikeService {
       }
 
       const binary = fs.readFileSync(current_path);
-      res.writeHead(200, { 'Content-Type': 'image/jpeg' });
-      res.end(binary, 'binary');
+      res.writeHead(200, { 'Content-Type': 'image/jpeg', 'Content-Encoding': 'gzip' });
+      const compressedContent = zlib.gzipSync(binary);
+      res.end(compressedContent);
       
     } catch (error) {
       throw new CustomException(EXCEPTION_MESSAGE.DATA_NOT_FOUND);
